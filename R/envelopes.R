@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' res <- HeckmanEM(y, x, w, cc, nu = 4, family = "Normal", error = 1e-05, iter.max = 500, 
+#' res <- HeckmanEM(y, x, w, cc, nu = 4, family = "Normal", error = 1e-05, iter.max = 500,
 #'                  im = TRUE, criteria = TRUE)
 #' HeckmanEM.envelope(res, ylab="Normalized Quantile Residuals",xlab="Standard normal quantile",
 #'                    line="quartile", col=c(20,1), pch=19, ylim = c(-5,4))
@@ -43,7 +43,7 @@ HeckmanEM.envelope <- function(obj, envelope=0.95, ...)
   {
     PerformanceAnalytics::chart.QQPlot(res$resmt,distribution='norm',envelope=envelope,main="SLt", ...)
   }
-  
+
 }
 
 ##-------------------------------##
@@ -64,11 +64,11 @@ resMT <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu, f
   rhoa<- sigma*rho
 
   resm <- resmt <- c()
-  
+
   S <-matrix(0,n,1)
   if(type=="Normal")
   {
-    mu1 <- x%*%beta 
+    mu1 <- x%*%beta
     mu2<- w%*%gama
     mu12.1<- mu2+rho/sigma*(y-mu1)
     sigma12.1<- 1-rho^2
@@ -76,19 +76,19 @@ resMT <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu, f
   }
   if(type=="T")
   {
-    mu1 <- x%*%beta 
+    mu1 <- x%*%beta
     mu2<- w%*%gama
     mu12.1<- mu2+rho/sigma*(y-mu1)
     sigma12.1<- 1-rho^2
     S <- pt(-mu2,nu)
   }
-  
+
   for (i in 1:n){
     resm[i] <-  1-cc[i]+log(S[i])
     resmt[i] <-   sqrt(-2*((1-cc[i])*log(1-cc[i]-resm[i])+resm[i]))*sign(resm[i])
   }
-  
-  return(list(resm=resm , resmt=resmt)) 
+
+  return(list(resm=resm , resmt=resmt))
 }
 
 ## ---------------------------------------------------- ##
@@ -109,18 +109,20 @@ sigma2 <- sigma^2
 rhoa<- sigma*rho
 
   resm <- resmt <- c()
-  
+
    S <-E<-matrix(0,n,1)
   if(type=="Normal")
   {
-    mu1 <- x%*%beta # 
+    mu1 <- x%*%beta #
     mu2<- w%*%gama
     mu12.1<- mu2+rho/sigma*(y-mu1)
     sigma12.1<- 1-rho^2
     Sigma<-matrix(c(sigma^2,sigma*rho,sigma*rho,1),2,2)
 
- for(i in 1:n){ 
-	 aux<-pmvESN(c(-Inf,0),c(y[i],Inf),c(mu1[i],mu2[i]),Sigma,c(0,0),0)*cc[i]+pnorm(y[i]-mu2[i])*(1-cc[i])    
+ for(i in 1:n){
+#' @importFrom MomTrunc pvmESN
+	 aux<-MomTrunc::pmvESN(c(-Inf,0),c(y[i],Inf),c(mu1[i],mu2[i]),Sigma,c(0,0),0)*cc[i]+pnorm(y[i]-mu2[i])*(1-cc[i])
+#' @importFrom stats qnorm
  	 S[i] <- qnorm(aux)
  	 E[i]  <-  -log(1-aux)
   }
@@ -133,17 +135,18 @@ rhoa<- sigma*rho
     sigma12.1<- 1-rho^2
     Sigma<-matrix(c(sigma^2,sigma*rho,sigma*rho,1),2,2)
 
-     for(i in 1:n){  
-	  aux<-pmvEST(c(-Inf,0),c(y[i],Inf),c(mu1[i],mu2[i]),Sigma,c(0,0),0,nu)*cc[i]+pt(y[i]-mu2[i],nu)*(1-cc[i]) 
+     for(i in 1:n){
+#' @importFrom MomTrunc pvmEST
+	  aux<-MomTrunc::pmvEST(c(-Inf,0),c(y[i],Inf),c(mu1[i],mu2[i]),Sigma,c(0,0),0,nu)*cc[i]+pt(y[i]-mu2[i],nu)*(1-cc[i])
 	  S[i] <- qnorm(aux)
 	  E[i]  <-  -log(1-aux)
   }
   }
-  
-  
+
+
   resmt<-S
   resm <-E
-  
-  return(list(resm=resm , resmt=resmt)) 
+
+  return(list(resm=resm , resmt=resmt))
 }
 

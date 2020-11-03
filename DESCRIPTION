@@ -6,6 +6,7 @@ Authors@R: c(person("Marcos", "Prates", role=c("aut","cre","trl"),
        	            email="marcosop@est.ufmg.br"),
              person("Victor", "Lachos", role="aut"),
              person("Dey", "Dipak", role="aut"))
+Author: Marcos Prates [aut, cre, trl], Victor Lachos [aut], Dipak Dey [aut]
 Maintainer: Marcos Prates <marcosop@est.ufmg.br>
 Description: Maximum likelihood estimation by an EM algorithm of Heckman-type sample selection Normal or Student-t models. 
 Imports: mvtnorm (>= 1.1-0), sampleSelection (>= 1.2-6), MomTrunc (>= 5.79), PerformanceAnalytics (>= 2.0.4)
