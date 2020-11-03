@@ -94,7 +94,7 @@ resMT <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu, f
 ## ---------------------------------------------------- ##
 ## Envelopes of the normalized qualtile residuals       ##
 ## ---------------------------------------------------- ##
-resGCS <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu, type= "Normal")
+resGCS <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu, family= "Normal")
 {
 
 if(family == "normal" || family == "Normal") type <- "Normal"
@@ -120,10 +120,9 @@ rhoa<- sigma*rho
     Sigma<-matrix(c(sigma^2,sigma*rho,sigma*rho,1),2,2)
 
  for(i in 1:n){
-#' @importFrom MomTrunc pvmESN
+#' @importFrom MomTrunc pmvESN
 	 aux<-MomTrunc::pmvESN(c(-Inf,0),c(y[i],Inf),c(mu1[i],mu2[i]),Sigma,c(0,0),0)*cc[i]+pnorm(y[i]-mu2[i])*(1-cc[i])
-#' @importFrom stats qnorm
- 	 S[i] <- qnorm(aux)
+ 	 S[i] <- stats::qnorm(aux)
  	 E[i]  <-  -log(1-aux)
   }
   }
@@ -136,9 +135,9 @@ rhoa<- sigma*rho
     Sigma<-matrix(c(sigma^2,sigma*rho,sigma*rho,1),2,2)
 
      for(i in 1:n){
-#' @importFrom MomTrunc pvmEST
+#' @importFrom MomTrunc pmvEST
 	  aux<-MomTrunc::pmvEST(c(-Inf,0),c(y[i],Inf),c(mu1[i],mu2[i]),Sigma,c(0,0),0,nu)*cc[i]+pt(y[i]-mu2[i],nu)*(1-cc[i])
-	  S[i] <- qnorm(aux)
+	  S[i] <- stats::qnorm(aux)
 	  E[i]  <-  -log(1-aux)
   }
   }

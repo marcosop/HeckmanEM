@@ -21,9 +21,9 @@ A residual plot of the fitted data and its envelope.
 }
 \examples{
 \dontrun{
-res <- HeckmanEM(y, x, w, cc, nu = 4, family = "Normal", error = 1e-05, iter.max = 500, 
+res <- HeckmanEM(y, x, w, cc, nu = 4, family = "Normal", error = 1e-05, iter.max = 500,
                  im = TRUE, criteria = TRUE)
-HeckmanEM.envelope(res, ylab="Martingale-type residuals",xlab="Standard normal quantile",
-                   line="quartile", col=c(20,1),pch=19)
+HeckmanEM.envelope(res, ylab="Normalized Quantile Residuals",xlab="Standard normal quantile",
+                   line="quartile", col=c(20,1), pch=19, ylim = c(-5,4))
 }
 }
