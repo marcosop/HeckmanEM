@@ -11,8 +11,8 @@
 #' \dontrun{
 #' res <- HeckmanEM(y, x, w, cc, nu = 4, family = "Normal", error = 1e-05, iter.max = 500, 
 #'                  im = TRUE, criteria = TRUE)
-#' HeckmanEM.envelope(res, ylab="Martingale-type residuals",xlab="Standard normal quantile",
-#'                    line="quartile", col=c(20,1),pch=19)
+#' HeckmanEM.envelope(res, ylab="Normalized Quantile Residuals",xlab="Standard normal quantile",
+#'                    line="quartile", col=c(20,1), pch=19, ylim = c(-5,4))
 #' }
 #' @export
 HeckmanEM.envelope <- function(obj, envelope=0.95, ...)
@@ -32,7 +32,8 @@ HeckmanEM.envelope <- function(obj, envelope=0.95, ...)
   nu <- obj$nu
   family  <- obj$family
 
-  res <- resMT(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu, family)
+  res <- resGCS(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu, family)
+  #res <- resMT(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu, family) #old martingale envelopes
   if(family=="Normal" || family=="normal")
   {
 #' @importFrom PerformanceAnalytics chart.QQPlot
@@ -86,6 +87,62 @@ resMT <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu, f
     resm[i] <-  1-cc[i]+log(S[i])
     resmt[i] <-   sqrt(-2*((1-cc[i])*log(1-cc[i]-resm[i])+resm[i]))*sign(resm[i])
   }
+  
+  return(list(resm=resm , resmt=resmt)) 
+}
+
+## ---------------------------------------------------- ##
+## Envelopes of the normalized qualtile residuals       ##
+## ---------------------------------------------------- ##
+resGCS <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu, type= "Normal")
+{
+
+if(family == "normal" || family == "Normal") type <- "Normal"
+else type <- "T"
+
+n<-nrow(x)
+y<-matrix(y,n,1)
+p<-ncol(x)
+q<-ncol(w)
+
+sigma2 <- sigma^2
+rhoa<- sigma*rho
+
+  resm <- resmt <- c()
+  
+   S <-E<-matrix(0,n,1)
+  if(type=="Normal")
+  {
+    mu1 <- x%*%beta # 
+    mu2<- w%*%gama
+    mu12.1<- mu2+rho/sigma*(y-mu1)
+    sigma12.1<- 1-rho^2
+    Sigma<-matrix(c(sigma^2,sigma*rho,sigma*rho,1),2,2)
+
+ for(i in 1:n){ 
+	 aux<-pmvESN(c(-Inf,0),c(y[i],Inf),c(mu1[i],mu2[i]),Sigma,c(0,0),0)*cc[i]+pnorm(y[i]-mu2[i])*(1-cc[i])    
+ 	 S[i] <- qnorm(aux)
+ 	 E[i]  <-  -log(1-aux)
+  }
+  }
+  if(type=="T")
+  {
+    mu1 <- x%*%beta # - sqrt(2/pi)*Delta
+    mu2<- w%*%gama
+    mu12.1<- mu2+rho/sigma*(y-mu1)
+    sigma12.1<- 1-rho^2
+    Sigma<-matrix(c(sigma^2,sigma*rho,sigma*rho,1),2,2)
+
+     for(i in 1:n){  
+	  aux<-pmvEST(c(-Inf,0),c(y[i],Inf),c(mu1[i],mu2[i]),Sigma,c(0,0),0,nu)*cc[i]+pt(y[i]-mu2[i],nu)*(1-cc[i]) 
+	  S[i] <- qnorm(aux)
+	  E[i]  <-  -log(1-aux)
+  }
+  }
+  
+  
+  resmt<-S
+  resm <-E
   
   return(list(resm=resm , resmt=resmt)) 
 }
