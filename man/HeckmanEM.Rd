@@ -68,10 +68,10 @@ y <- datas$y
 cc <- datas$cc
 \donttest{
 # Normal EM
-res.N <- HeckmanEM(y, x, w, cc, nu = 4, family="Normal", error = 1e-05, iter.max = 500,
+res.N <- HeckmanEM(y, x, w, cc, nu = 4, family="Normal", error = 1e-05, iter.max = 50,
                    im=TRUE, criteria = TRUE)
 # Student-t: EM
-res.T <- HeckmanEM(y, x, w, cc, nu = 4, family="T", error = 1e-05, iter.max = 500,
+res.T <- HeckmanEM(y, x, w, cc, nu = 4, family="T", error = 1e-05, iter.max = 50,
                    im=TRUE, criteria = TRUE)
 }
 }

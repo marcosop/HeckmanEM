@@ -1,11 +1,10 @@
-citHeader("To cite mixsmsn in publications use:")
+citHeader("To cite HeckmanEM in publications use:")
 
 citEntry(entry = "Article",
   title        = "Heckman selection-t model: parameter estimation via the EM-algorithm",
   author       = personList(as.person("V{\\'i}ctor Hugo Lachos"),
   			    as.person("Marcos Oliveira Prates"),
-                            as.person("Dipak Kumar Dey"),
-                   ),
+                            as.person("Dipak Kumar Dey")),
   journal      = "arXiv preprint arXiv:2006.08036",
   year         = "2020",
   url          = "https://arxiv.org/abs/2006.08036",
