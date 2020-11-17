@@ -1,0 +1,19 @@
+citHeader("To cite mixsmsn in publications use:")
+
+citEntry(entry = "Article",
+  title        = "Heckman selection-t model: parameter estimation via the EM-algorithm",
+  author       = personList(as.person("V{\\'i}ctor Hugo Lachos"),
+  			    as.person("Marcos Oliveira Prates"),
+                            as.person("Dipak Kumar Dey"),
+                   ),
+  journal      = "arXiv preprint arXiv:2006.08036",
+  year         = "2020",
+  url          = "https://arxiv.org/abs/2006.08036",
+
+  textVersion  =
+  paste("Victor Hugo Lachos, Marcos Oliveira Prates, Dipak Kumar Dey (2020).",
+        "Heckman selection-t model: parameter estimation via the EM-algorithm.",
+        "rXiv preprint arXiv:2006.08036.",
+        "https://arxiv.org/abs/2006.08036")
+)
+

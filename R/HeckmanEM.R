@@ -20,30 +20,30 @@
 #' nu <- 4
 #' rho <- .6
 #' cens <- .25
-#' 
+#'
 #' set.seed(20200527)
 #' w <- cbind(1,runif(n,-1,1),rnorm(n))
-#' x <- cbind(w[,1:2]) 
+#' x <- cbind(w[,1:2])
 #' c <- qt(cens, df=nu)
-#' 
+#'
 #' sigma2 <- 1
-#' 
+#'
 #' beta <- c(1,0.5)
 #' gamma <- c(1,0.3,-.5)
 #' gamma[1] <- -c*sqrt(sigma2)
-#' 
+#'
 #' set.seed(1)
 #' datas <- rHeckman(x,w,beta,gamma,sigma2,rho,nu,family=family)
 #' y <- datas$y
 #' cc <- datas$cc
-#' \dontrun{
+#' \donttest{
 #' # Normal EM
-#' res.N <- HeckmanEM(y, x, w, cc, nu = 4, family="Normal", error = 1e-05, iter.max = 500, 
+#' res.N <- HeckmanEM(y, x, w, cc, nu = 4, family="Normal", error = 1e-05, iter.max = 500,
 #'                    im=TRUE, criteria = TRUE)
 #' # Student-t: EM
-#' res.T <- HeckmanEM(y, x, w, cc, nu = 4, family="T", error = 1e-05, iter.max = 500, 
+#' res.T <- HeckmanEM(y, x, w, cc, nu = 4, family="T", error = 1e-05, iter.max = 500,
 #'                    im=TRUE, criteria = TRUE)
-#' } 
+#' }
 #' @export
 HeckmanEM <- function(y, x, w, cc, nu = 4, family="T", error = 1e-05,iter.max = 500, im=TRUE, criteria = TRUE){
 
@@ -57,7 +57,7 @@ HeckmanEM <- function(y, x, w, cc, nu = 4, family="T", error = 1e-05,iter.max = 
  if(!is.matrix(w)) stop("y must be a matrix!")
 
  if((family == "T" || family == "t") && length(nu) == 0) stop("initial for nu must be provided!")
- 
+
  if(family == "Normal" || family == "normal"){
    out <- EMn.alg(y=y, x=x, w=w, cc=cc, error = error, iter.max = iter.max, im=im, criteria = criteria)
  }

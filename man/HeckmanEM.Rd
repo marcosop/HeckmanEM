@@ -53,7 +53,7 @@ cens <- .25
 
 set.seed(20200527)
 w <- cbind(1,runif(n,-1,1),rnorm(n))
-x <- cbind(w[,1:2]) 
+x <- cbind(w[,1:2])
 c <- qt(cens, df=nu)
 
 sigma2 <- 1
@@ -66,12 +66,12 @@ set.seed(1)
 datas <- rHeckman(x,w,beta,gamma,sigma2,rho,nu,family=family)
 y <- datas$y
 cc <- datas$cc
-\dontrun{
+\donttest{
 # Normal EM
-res.N <- HeckmanEM(y, x, w, cc, nu = 4, family="Normal", error = 1e-05, iter.max = 500, 
+res.N <- HeckmanEM(y, x, w, cc, nu = 4, family="Normal", error = 1e-05, iter.max = 500,
                    im=TRUE, criteria = TRUE)
 # Student-t: EM
-res.T <- HeckmanEM(y, x, w, cc, nu = 4, family="T", error = 1e-05, iter.max = 500, 
+res.T <- HeckmanEM(y, x, w, cc, nu = 4, family="T", error = 1e-05, iter.max = 500,
                    im=TRUE, criteria = TRUE)
-} 
+}
 }
