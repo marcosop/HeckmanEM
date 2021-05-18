@@ -85,7 +85,7 @@ resMT <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu, f
 
   for (i in 1:n){
     resm[i] <-  1-cc[i]+log(S[i])
-    resmt[i] <- stats::sqrt(-2*((1-cc[i])*log(1-cc[i]-resm[i])+resm[i]))*sign(resm[i])
+    resmt[i] <- sqrt(-2*((1-cc[i])*log(1-cc[i]-resm[i])+resm[i]))*sign(resm[i])
   }
 
   return(list(resm=resm , resmt=resmt))
@@ -123,7 +123,7 @@ rhoa<- sigma*rho
 #' @importFrom MomTrunc pmvESN
 	 aux<-MomTrunc::pmvESN(c(-Inf,0),c(y[i],Inf),c(mu1[i],mu2[i]),Sigma,c(0,0),0)*cc[i]+pnorm(y[i]-mu2[i])*(1-cc[i])
  	 S[i] <- stats::qnorm(aux)
- 	 E[i]  <-  -stats::log(1-aux)
+ 	 E[i]  <-  -log(1-aux)
   }
   }
   if(type=="T")
@@ -138,7 +138,7 @@ rhoa<- sigma*rho
 #' @importFrom MomTrunc pmvEST
 	  aux<-MomTrunc::pmvEST(c(-Inf,0),c(y[i],Inf),c(mu1[i],mu2[i]),Sigma,c(0,0),0,nu)*cc[i]+pt(y[i]-mu2[i],nu)*(1-cc[i])
 	  S[i] <- stats::qnorm(aux)
-	  E[i]  <-  -stats::log(1-aux)
+	  E[i]  <-  -log(1-aux)
   }
   }
 

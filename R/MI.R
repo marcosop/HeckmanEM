@@ -75,10 +75,10 @@ if (family=="Normal" || family=="normal"){
      Baa<-matrix(c(2*sigma, rho, rho ,0),ncol=2,nrow=2)
      Caa<-matrix(c(0, sigma,sigma,0),nrow=2,ncol=2)
      
-     SigI <- stats::chol2inv(stats::chol(Sigma))
+     SigI <- chol2inv(chol(Sigma))
      derBetas<- 0.5*(t(aux41)%*%SigI%*%(uy))+0.5*t(t(uy)%*%SigI%*%(aux41))-t(aux41)%*%SigI%*%aux5
-     dersigma<- -0.5*stats::sum(stats::diag(SigI%*%Baa))+0.5*stats::sum(stats::diag(aux2%*%SigI%*%Baa%*%SigI)) 
-     derrho<- -0.5*stats::sum(stats::diag(SigI%*%Caa))+0.5*stats::sum(stats::diag(aux2%*%SigI%*%Caa%*%SigI)) 
+     dersigma<- -0.5*sum(diag(SigI%*%Baa))+0.5*sum(diag(aux2%*%SigI%*%Baa%*%SigI)) 
+     derrho<- -0.5*sum(diag(SigI%*%Caa))+0.5*sum(diag(aux2%*%SigI%*%Caa%*%SigI)) 
      
      derlog<-  matrix(c(derBetas,dersigma,derrho),p+q+2,1)
      suma1<- suma1+derlog%*%t(derlog)
@@ -90,7 +90,7 @@ if (family=="T" || family=="t"){
 
    
     ychap <- cbind(rep(1,n), rep(1,n))
-   vary <- stats::diag(2)  
+   vary <- diag(2)  
 
    mu1<- x%*%beta
    mu2<- w%*%gama
@@ -160,9 +160,9 @@ if (family=="T" || family=="t"){
         SigmaUiA<- Sigma*nu/(nu+2)
         auxupper<- -mu2[i]
         
-        auxU1 <- stats::pt(auxupper/stats::sqrt(SigmaUiA[2,2]),nu+2)
+        auxU1 <- stats::pt(auxupper/sqrt(SigmaUiA[2,2]),nu+2)
         
-        auxU2 <- stats::pt(auxupper/stats::sqrt(SigmaUi[2,2]),nu) 
+        auxU2 <- stats::pt(auxupper/sqrt(SigmaUi[2,2]),nu) 
          
         MomNT1<- MomTrunc::meanvarTMD(c(-Inf,-Inf),c(Inf,0),c(mu1[i],mu2[i]),SigmaUiA,dist="t",nu=nu+2)
         vary = MomTrunc::meanvarTMD(c(-Inf,-Inf),c(Inf,0),c(mu1[i],mu2[i]), Sigma,dist="t",nu=nu)$varcov
@@ -184,10 +184,10 @@ if (family=="T" || family=="t"){
      Baa<-matrix(c(2*sigma, rho, rho ,0),ncol=2,nrow=2)
      Caa<-matrix(c(0, sigma,sigma,0),nrow=2,ncol=2)
      
-     SigI <- stats::chol2inv(stats::chol(Sigma))
+     SigI <- chol2inv(chol(Sigma))
      derBetas<- 0.5*(t(aux41)%*%SigI%*%(uy))+0.5*t(t(uy)%*%SigI%*%(aux41))-U0*t(aux41)%*%SigI%*%aux5
-     dersigma<- -0.5*stats::sum(stats::diag(SigI%*%Baa))+0.5*stats::sum(stats::diag(aux2%*%SigI%*%Baa%*%SigI)) 
-     derrho<- -0.5*stats::sum(stats::diag(SigI%*%Caa))+0.5*stats::sum(stats::diag(aux2%*%SigI%*%Caa%*%SigI)) 
+     dersigma<- -0.5*sum(diag(SigI%*%Baa))+0.5*sum(diag(aux2%*%SigI%*%Baa%*%SigI)) 
+     derrho<- -0.5*sum(diag(SigI%*%Caa))+0.5*sum(diag(aux2%*%SigI%*%Caa%*%SigI)) 
      
      derlog<-  matrix(c(derBetas,dersigma,derrho),p+q+2,1)
      suma1<- suma1+derlog%*%t(derlog)
@@ -195,7 +195,7 @@ if (family=="T" || family=="t"){
 
 }
 
-desvio<- stats::sqrt(stats::diag(stats::chol2inv(chol(suma1))))
+desvio<- sqrt(diag(chol2inv(chol(suma1))))
 names(desvio) <- c(paste0("beta",0:(length(beta)-1)), paste0("gamma",0:(length(gama)-1)), "sigma", "rho")
 
 return(desvio)

@@ -32,8 +32,8 @@
 #' }
 #' @export
 rHeckman<-function(x,w,beta,gamma,sigma2,rho,nu=4,family="T"){
-n<-stats::nrow(x)
-rhoa<- rho*stats::sqrt(sigma2)
+n <- nrow(x)
+rhoa <- rho*sqrt(sigma2)
 
 if(family=="Normal" || family=="normal"){
 Sigma<- matrix(c(sigma2, rhoa, rhoa, 1 ), ncol = 2)

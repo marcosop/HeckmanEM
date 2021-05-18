@@ -1,7 +1,7 @@
 ################################################################################
 ## NOT SHARED FUNCTIONS
 ################################################################################
-#' @importFrom stats as.formula dnorm dt optimize pnorm pt
+#' @importFrom stats as.formula dnorm dt optimize pnorm pt 
 ################################################################################
 ### likelihood function  : Normal
 ################################################################################
@@ -120,7 +120,7 @@ while((criterio > error) && (count <= iter.max)){
         uyy<-MomNT1$EYY
 
       }
-     SigI <- stats::solve(Sigma, tol=1e-30)
+     SigI <- solve(Sigma, tol=1e-30)
      aux41<- rbind(c(x[i,],0*w[i,]),c(x[i,]*0,w[i,]))
      aux5 <- aux41%*%betaC
      aux6<- uyy-aux5%*%t(uy)-t(aux5%*%t(uy))+aux5%*%t(aux5) 
@@ -133,11 +133,11 @@ while((criterio > error) && (count <= iter.max)){
   
   suma2aux<-(suma2+t(suma2))/2
      
-  betaC<- stats::solve(suma2aux, tol=1e-30)%*%suma3
+  betaC<- solve(suma2aux, tol=1e-30)%*%suma3
   psi<- suma1/n
   rhoa<- suma11/suma12
   sigma2<- psi+rhoa^2
-  sigma<- stats::sqrt(sigma2)
+  sigma<- sqrt(sigma2)
   rho<- rhoa/sigma
   Sigma<- matrix(c(sigma2,rhoa,rhoa,1),2,2)
   
@@ -147,7 +147,7 @@ while((criterio > error) && (count <= iter.max)){
  
  lkante1<-lkante
  lkante<- likeL(y, x, w, cc, beta, gama, Sigma)
- criterio <- stats::sqrt(abs(1-lkante1/lkante))
+ criterio <- sqrt(abs(1-lkante1/lkante))
   
  if((rho >= 1 - 1e-07)&&(rho <= -1 + 1e-07)) {
      stop("EM did not coverge")#criterio<-0.0000000000001
@@ -187,10 +187,10 @@ EMt.alg<-function(y, x, w, cc, nu, error,iter.max,im,criteria){
 #' @importFrom mvtnorm GenzBretz
 GB = mvtnorm::GenzBretz(maxpts = 5e4, abseps = 1e-9, releps = 0)
 
-n<-stats::nrow(x)
+n<-nrow(x)
 y<-matrix(y,n,1)
-p<-stats::ncol(x)
-q<-stats::ncol(w)
+p<-ncol(x)
+q<-ncol(w)
 
 ini <- init.values(y,x,w,cc)
 
@@ -301,7 +301,7 @@ while((criterio > error) && (count <= iter.max)){
         uyy<-U2
        
       }
-     SigI <- stats::solve(Sigma,tol=1e-30)
+     SigI <- solve(Sigma,tol=1e-30)
      aux41<- rbind(c(x[i,],0*w[i,]),c(x[i,]*0,w[i,]))
      aux5 <- aux41%*%betaC
      aux6<-  uyy-aux5%*%t(uy)- t(aux5%*%t(uy))+U0*aux5%*%t(aux5)
@@ -313,11 +313,11 @@ while((criterio > error) && (count <= iter.max)){
      suma3<- suma3+ t(aux41)%*%SigI%*%uy
   }
   suma2aux<-(suma2+t(suma2))/2
-  betaC<- stats::solve(suma2aux, tol=1e-30)%*%suma3
+  betaC<- solve(suma2aux, tol=1e-30)%*%suma3
   psi<- suma1/n
   rhoa<- suma11/suma12
   sigma2<- psi+rhoa^2
-  sigma<- stats::sqrt(sigma2)
+  sigma<- sqrt(sigma2)
   rho<- rhoa/sigma
   Sigma<- matrix(c(sigma2,rhoa,rhoa,1),2,2)
     
