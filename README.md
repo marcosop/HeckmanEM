@@ -1,3 +1,8 @@
+<!-- badges -->
+[![CRAN\ Status\ Badge](http://r-pkg.org/badges/version/HeckmanEM?color=blue)](http://cran.r-project.org/package=HeckmanEM)
+[![Downloads](http://cranlogs.r-pkg.org/badges/HeckmanEM?color=blue)](http://cran.rstudio.com/package=HeckmanEM)
+[![R-CMD-check](https://github.com/marcosop/HeckmanEM/workflows/R-CMD-check/badge.svg)](https://github.com/marcosop/HeckmanEM/actions)
+<!-- end badges -->
 
 # HackmanEM
 
