@@ -18,7 +18,7 @@
 HeckmanEM.envelope <- function(obj, envelope=0.95, ...)
 {
 
-  if(class(obj) != "HeckmanEM") stop("Only \"HeckmanEM\" objects accepted!")
+  if(!inherits(obj,"HeckmanEM")) stop("Only \"HeckmanEM\" objects accepted!")
   if (obj$family != "Normal" && obj$family !="normal" && obj$family !="T" && obj$family !="t" ) stop("Family not recognized")
 
   y <- obj$y
