@@ -14,7 +14,8 @@ HeckmanEM(
   error = 1e-05,
   iter.max = 500,
   im = TRUE,
-  criteria = TRUE
+  criteria = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ HeckmanEM(
 \item{im}{TRUE/FALSE, boolean to decide if the standard erros of the parameters should be computed.}
 
 \item{criteria}{TRUE/FALSE, boolean to decide if the model selection criteria should be computed.}
+
+\item{verbose}{TRUE/FALSE, boolean to decide if the progress should be printed in the screen.}
 }
 \value{
 An object of the class HeckmanEM with all the outputs provided from the function.

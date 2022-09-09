@@ -30,12 +30,14 @@ Return an object with the response (y) and missing values (cc).
 `rHeckman()` generate a ramdom sample from the Heckman selection model (Normal or Student-t).
 }
 \examples{
-\dontrun{
+\donttest{
+n <- 100
+rho <- .6
 cens <- 0.25
 nu <- 4
 set.seed(20200527)
 w <- cbind(1,runif(n,-1,1),rnorm(n))
-x <- cbind(w[,1:2]) 
+x <- cbind(w[,1:2])
 
 family <- "T"
 c <- qt(cens, df=nu)
@@ -44,7 +46,7 @@ sigma2 <- 1
 beta <- c(1,0.5)
 gamma<- c(1,0.3,-.5)
 gamma[1] <- -c*sqrt(sigma2)
-set.seed(iter)
+
 data <- rHeckman(x,w,beta,gamma,sigma2,rho,nu,family=family)
 }
 }

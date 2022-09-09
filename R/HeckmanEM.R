@@ -12,6 +12,7 @@
 #' @param iter.max The maximum number of iterations for the EM algorithm.
 #' @param im TRUE/FALSE, boolean to decide if the standard erros of the parameters should be computed.
 #' @param criteria TRUE/FALSE, boolean to decide if the model selection criteria should be computed.
+#' @param verbose TRUE/FALSE, boolean to decide if the progress should be printed in the screen.
 #' @return An object of the class HeckmanEM with all the outputs provided from the function.
 #'
 #' @examples
@@ -45,7 +46,7 @@
 #'                    im=TRUE, criteria = TRUE)
 #' }
 #' @export
-HeckmanEM <- function(y, x, w, cc, nu = 4, family="T", error = 1e-05,iter.max = 500, im=TRUE, criteria = TRUE){
+HeckmanEM <- function(y, x, w, cc, nu = 4, family="T", error = 1e-05,iter.max = 500, im=TRUE, criteria = TRUE, verbose = TRUE){
 
  if (family != "Normal" && family !="normal" && family !="T" && family !="t" ) stop("Family not recognized! Obly families allowed are: \"Normal\" and \"T\".")
  if(!is.vector(y)) stop("y must be a vector!")
@@ -59,9 +60,9 @@ HeckmanEM <- function(y, x, w, cc, nu = 4, family="T", error = 1e-05,iter.max = 
  if((family == "T" || family == "t") && length(nu) == 0) stop("initial for nu must be provided!")
 
  if(family == "Normal" || family == "normal"){
-   out <- EMn.alg(y=y, x=x, w=w, cc=cc, error = error, iter.max = iter.max, im=im, criteria = criteria)
+   out <- EMn.alg(y=y, x=x, w=w, cc=cc, error = error, iter.max = iter.max, im=im, criteria = criteria, verbose=verbose)
  }
- else out <- EMt.alg(y=y, x=x, w=w, cc=cc, nu=nu, error = error, iter.max = iter.max, im=im, criteria = criteria)
+ else out <- EMt.alg(y=y, x=x, w=w, cc=cc, nu=nu, error = error, iter.max = iter.max, im=im, criteria = criteria, verbose=verbose)
 
  return(out)
 }

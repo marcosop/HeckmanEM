@@ -20,7 +20,29 @@ A residual plot of the fitted data and its envelope.
 `HeckmanEM.envelope()` plot the envelope for the fitted Heckman selection model.
 }
 \examples{
-\dontrun{
+\donttest{
+n <- 100
+family <- "T"
+nu <- 4
+rho <- .6
+cens <- .25
+
+set.seed(20200527)
+w <- cbind(1,runif(n,-1,1),rnorm(n))
+x <- cbind(w[,1:2])
+c <- qt(cens, df=nu)
+
+sigma2 <- 1
+
+beta <- c(1,0.5)
+gamma <- c(1,0.3,-.5)
+gamma[1] <- -c*sqrt(sigma2)
+
+set.seed(1)
+datas <- rHeckman(x,w,beta,gamma,sigma2,rho,nu,family=family)
+y <- datas$y
+cc <- datas$cc
+
 res <- HeckmanEM(y, x, w, cc, nu = 4, family = "Normal", error = 1e-05, iter.max = 500,
                  im = TRUE, criteria = TRUE)
 HeckmanEM.envelope(res, ylab="Normalized Quantile Residuals",xlab="Standard normal quantile",

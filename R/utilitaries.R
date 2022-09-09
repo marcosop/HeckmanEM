@@ -59,7 +59,7 @@ init.values <- function(y,x,w,cc){
 ################################################################################
 # Algoritmo Normal case: Using truncated moments
 ################################################################################
-EMn.alg<-function(y, x, w, cc, error,iter.max, im, criteria){
+EMn.alg<-function(y, x, w, cc, error,iter.max, im, criteria,verbose){
 
 n<-nrow(x)
 y<-matrix(y,n,1)
@@ -86,7 +86,7 @@ betaC<-c(beta,gama)
  
 while((criterio > error) && (count <= iter.max)){
    count<-count+1
-   cat("Iteration: ", count,"\r")
+   if(verbose) cat("Iteration: ", count,"\r")
    
    mu1<- x%*%beta
    mu2<- w%*%gama
@@ -154,7 +154,7 @@ while((criterio > error) && (count <= iter.max)){
   }
  }
 
- cat("\n") 
+ if(verbose) cat("\n") 
  AICc<- NULL
  AICcorr <- NULL
  BICc <- NULL
@@ -182,7 +182,7 @@ while((criterio > error) && (count <= iter.max)){
 ################################################################################
 # Algorithm Student-t: Using truncated moments
 ################################################################################
-EMt.alg<-function(y, x, w, cc, nu, error,iter.max,im,criteria){
+EMt.alg<-function(y, x, w, cc, nu, error,iter.max,im,criteria,verbose){
 
 #' @importFrom mvtnorm GenzBretz
 GB = mvtnorm::GenzBretz(maxpts = 5e4, abseps = 1e-9, releps = 0)
@@ -211,7 +211,7 @@ lkante   <- likeLt(nu, y, x, w, cc, beta, gama, Sigma)
 
 while((criterio > error) && (count <= iter.max)){
    count<-count+1
-   cat("Iteration: ", count,"\r")
+   if(verbose) cat("Iteration: ", count,"\r")
   
    mu1<- x%*%beta
    mu2<- w%*%gama
@@ -337,7 +337,7 @@ while((criterio > error) && (count <= iter.max)){
   }
  }
 
- cat("\n") 
+ if(verbose) cat("\n") 
  AICc<- NULL
  AICcorr <- NULL
  BICc <- NULL
