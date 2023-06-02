@@ -1,6 +1,6 @@
 #' Model selection criteria for the Heckman Selection model
 #'
-#' `HeckmanEM.criteria()` calculate the AIC, AICc, BIC selection criteria for the fitted Heckman selection model.
+#' `HeckmanEM.criteria()` calculates the AIC, AICc, BIC selection criteria for the fitted Heckman selection model.
 #'
 #' @param obj An object of the class HeckmanEM.
 #' @return The calculated AIC, AICc, and BIC for the parameters of the fitted model.

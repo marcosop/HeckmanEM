@@ -1,6 +1,6 @@
-#' Envelope for the Heckman Selection model.
+#' Envelope for the Heckman Selection model
 #'
-#' `HeckmanEM.envelope()` plot the envelope for the fitted Heckman selection model.
+#' `HeckmanEM.envelope()` plots the envelope for the fitted Heckman selection model.
 #'
 #' @param obj An object of the class HeckmanEM.
 #' @param envelope The envelope coverage percentage.

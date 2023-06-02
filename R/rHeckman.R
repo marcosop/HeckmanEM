@@ -1,6 +1,6 @@
-#' Generate data from the Heckman Selection model (Normal or Student-t).
+#' Data generation from the Heckman Selection model (Normal or Student-t)
 #'
-#' `rHeckman()` generate a random sample from the Heckman selection model (Normal or Student-t).
+#' `rHeckman()` generates a random sample from the Heckman selection model (Normal or Student-t).
 #'
 #' @param x A covariate matrix for the response y.
 #' @param w A covariate matrix for the missing indicator cc.

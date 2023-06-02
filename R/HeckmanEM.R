@@ -1,6 +1,6 @@
-#' Fit the Normal or Student-t Heckman Selection model.
+#' Fit the Normal or Student-t Heckman Selection model
 #'
-#' `HeckmanEM()` fit the Heckman selection model.
+#' `HeckmanEM()` fits the Heckman selection model.
 #'
 #' @param y A response vector.
 #' @param x A covariate matrix for the response y.
