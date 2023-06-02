@@ -1,4 +1,4 @@
-#' Standard error estimation for the Heckman Selectio model by the Information Matrix.
+#' Standard error estimation for the Heckman Selection model by the Information Matrix.
 #'
 #' `HeckmanEM.infomat()` estimate the standard errors for the parameters for the fitted Heckman selection model.
 #'

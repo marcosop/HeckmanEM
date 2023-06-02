@@ -1,16 +1,16 @@
-#' Fit the Normal or Student-t Heckman Selectio model.
+#' Fit the Normal or Student-t Heckman Selection model.
 #'
 #' `HeckmanEM()` fit the Heckman selection model.
 #'
 #' @param y A response vector.
 #' @param x A covariate matrix for the response y.
 #' @param w A covariate matrix for the missing indicator cc.
-#' @param cc A missing incidator vector (1=obserced, 0=missing) .
+#' @param cc A missing indicator vector (1=observed, 0=missing) .
 #' @param nu The initial value for the degrees of freedom.
 #' @param family The family to be used (Normal or T).
-#' @param error The abslute convergence error for the EM stopping rule.
+#' @param error The absolute convergence error for the EM stopping rule.
 #' @param iter.max The maximum number of iterations for the EM algorithm.
-#' @param im TRUE/FALSE, boolean to decide if the standard erros of the parameters should be computed.
+#' @param im TRUE/FALSE, boolean to decide if the standard errors of the parameters should be computed.
 #' @param criteria TRUE/FALSE, boolean to decide if the model selection criteria should be computed.
 #' @param verbose TRUE/FALSE, boolean to decide if the progress should be printed in the screen.
 #' @return An object of the class HeckmanEM with all the outputs provided from the function.

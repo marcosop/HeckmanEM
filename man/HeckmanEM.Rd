@@ -31,11 +31,11 @@ HeckmanEM(
 
 \item{family}{The family to be used (Normal or T).}
 
-\item{error}{The abslute convergence error for the EM stopping rule.}
+\item{error}{The absolute convergence error for the EM stopping rule.}
 
 \item{iter.max}{The maximum number of iterations for the EM algorithm.}
 
-\item{im}{TRUE/FALSE, boolean to decide if the standard erros of the parameters should be computed.}
+\item{im}{TRUE/FALSE, boolean to decide if the standard errors of the parameters should be computed.}
 
 \item{criteria}{TRUE/FALSE, boolean to decide if the model selection criteria should be computed.}
 

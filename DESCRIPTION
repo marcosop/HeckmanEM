@@ -2,18 +2,18 @@ Package: HeckmanEM
 Type: Package
 Title: Fit Normal or Student-t Heckman Selection Models
 Version: 0.2.0
-Authors@R: c(person("Marcos", "Prates", role=c("aut","cre","trl"),
+Authors@R: c(person(given = "Marcos",family = "Prates", role=c("aut","cre","trl"),
        	            email="marcosop@est.ufmg.br"),
-             person("Victor", "Lachos", role="aut"),
-             person("Dipak", "Dey", role="aut"),
-             person("Marcos", "Oliveira", role="aut","ctb"),
-             person("Christian", "Galarza", role="ctb"),
-             person("Katherine", "Loor", role="ctb"))
-Description: It performs Maximum likelihood estimation for the Heckman selection model (Normal or Student-t) using an EM-algorithm <doi:10.1016/j.jmva.2021.104737>. Influence diagnostics is also provided for different perturbance scenarios.   
-Imports: mvtnorm (>= 1.1-0), sampleSelection (>= 1.2-6), MomTrunc (>=5.79), PerformanceAnalytics (>= 2.0.4)
+             person(given = "Victor",family="Lachos", role="aut"),
+             person(given = "Dipak",family="Dey", role="aut"),
+             person(given = "Marcos",family= "Oliveira", role=c("aut","ctb")),
+             person(given = "Christian",family = "Galarza", role="ctb"),
+             person(given = "Katherine",family = "Loor", role="ctb"))
+Description: It performs maximum likelihood estimation for the Heckman selection model (Normal or Student-t) using an EM-algorithm <doi:10.1016/j.jmva.2021.104737>. It also performs influence diagnostic through global and local influence for four possible perturbation schema. 
+Imports: mvtnorm (>= 1.1-0), sampleSelection (>= 1.2-6), MomTrunc (>= 5.79), PerformanceAnalytics (>= 2.0.4)
 License: GPL (>= 2.0)
 Encoding: UTF-8
 LazyData: false
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 NeedsCompilation: no
 Packaged: 2021-05-19 11:16:38 UTC; marcos

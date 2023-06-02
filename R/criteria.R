@@ -1,4 +1,4 @@
-#' Model selection criteria for the Heckman Selectio model
+#' Model selection criteria for the Heckman Selection model
 #'
 #' `HeckmanEM.criteria()` calculate the AIC, AICc, BIC selection criteria for the fitted Heckman selection model.
 #'

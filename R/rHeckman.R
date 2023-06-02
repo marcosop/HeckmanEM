@@ -1,13 +1,13 @@
-#' Generate data from the Heckman Selectio model (Normal or Student-t).
+#' Generate data from the Heckman Selection model (Normal or Student-t).
 #'
-#' `rHeckman()` generate a ramdom sample from the Heckman selection model (Normal or Student-t).
+#' `rHeckman()` generate a random sample from the Heckman selection model (Normal or Student-t).
 #'
 #' @param x A covariate matrix for the response y.
 #' @param w A covariate matrix for the missing indicator cc.
 #' @param beta Values for the beta vector.
 #' @param gamma Values for the gamma vector.
 #' @param sigma2 Value for the variance.
-#' @param rho Value for the dependence between the reponse and missing value.
+#' @param rho Value for the dependence between the response and missing value.
 #' @param nu Value for the degrees of freedom.
 #' @param family The family to be used (Normal or T).
 #' @return Return an object with the response (y) and missing values (cc).

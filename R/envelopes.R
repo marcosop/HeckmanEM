@@ -1,9 +1,9 @@
-#' Envelope for the Heckman Selectio model.
+#' Envelope for the Heckman Selection model.
 #'
 #' `HeckmanEM.envelope()` plot the envelope for the fitted Heckman selection model.
 #'
 #' @param obj An object of the class HeckmanEM.
-#' @param envelope The envelope corverage percertange.
+#' @param envelope The envelope coverage percentage.
 #' @param ... Other option for chart.QQPlot from PerformanceAnalytics package.
 #' @return A residual plot of the fitted data and its envelope.
 #'
