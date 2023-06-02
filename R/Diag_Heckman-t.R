@@ -484,11 +484,55 @@ CaseDele <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu
 ### INFLUENCE DIAGNOSTICS - User
 ### -------------------------------
 
+#' Influence Analysis for the Heckman Selection model
+#'
+#' @description
+#' This function conducts influence analysis for a given `HeckmanEM` object.
+#' The influence analysis can be conducted using several types of perturbations.
+#'
+#' @param object A `HeckmanEM` object to perform the analysis on.
+#' @param type A character string indicating the type of perturbation to perform.
+#' The types can be one of "case-weight","scale","response" and"exploratory".
+#' @param colx Optional integer specifying the position of the column in the
+#' object's matrix \code{x} that will undergo perturbation. Only required when type is
+#' "exploratory".
+#' @param k A positive real constant to be used in the benchmark calculation: \eqn{M_0 + k\times \mathrm{sd}(M_0)}. Default is 3.5.
+#'
+#' @return Returns a list with the following elements:
+#' \item{M0}{A vector of length \eqn{n} with the aggregated contribution of all eigenvectors of the matrix associated with the normal curvature.}
+#' \item{benchmark}{\eqn{M_0 + k\times \mathrm{sd}(M_0)}}
+#' \item{influent}{A vector with the influential observations' positions.}
+#'
+#' @examples
+#' \dontrun{
+#' # Assume `heckman_model` is a HeckmanEM object
+#' Influence(heckman_model, type = "case-weight")
+#' }
+#'
+#' @seealso
+#' \code{\link{HeckmanEM}}
+#'
+#' @references
+#' Insert any relevant references here.
+#'
+#' @author Marcos Oliveira
+#'
+#' @export Influence
+#'
+
+Influence <- function(object, type, colx = NULL, k = 3.5) {
+  # function body
+}
+
 Influence <- function(object,type,colx = NULL,k=3.5){
 
-  types = c("case-weight","scale","response",
-            "exploratory",
-            "exploratory2","exploratory3")
+  # types = c("case-weight","scale","response",
+  #           "exploratory",
+  #           "exploratory2","exploratory3")
+
+  types = c("case-weight","scale","response","exploratory")
+
+
 
     if(is(object,"HeckmanEM")){
 
@@ -499,7 +543,8 @@ Influence <- function(object,type,colx = NULL,k=3.5){
       if(type %in% types){
         Perturb = which(types == type)
       }else{
-        stop("Perturbation types may only take values `case-weight`,`scale`,`response`,`exploratory`, `exploratory2`, `exploratory3`.")
+#stop("Perturbation types may only take values `case-weight`,`scale`,`response`,`exploratory`, `exploratory2`, `exploratory3`.")
+        stop("Perturbation types may only take values `case-weight`,`scale`,`response`, and `exploratory`.")
       }
 
       if(Perturb>=4){
