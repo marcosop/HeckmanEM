@@ -3,11 +3,11 @@
 [![Downloads](http://cranlogs.r-pkg.org/badges/HeckmanEM?color=blue)](http://cran.rstudio.com/package=HeckmanEM)
 <!-- end badges -->
 
-# HackmanEM
+# HeckmanEM
 
 ## Overview
 
-HackmanEM: Fit Normal or Student-t Heckman Selection models.
+HeckmanEM: Fit Normal or Student-t Heckman Selection models.
 
 ## Installation
 
