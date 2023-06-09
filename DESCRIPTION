@@ -10,7 +10,7 @@ Authors@R: c(person(given = "Marcos",family = "Prates", role=c("aut","cre","trl"
              person(given = "Christian",family = "Galarza", role="ctb"),
              person(given = "Katherine",family = "Loor", role="ctb"))
 Description: It performs maximum likelihood estimation for the Heckman selection model (Normal or Student-t) using an EM-algorithm <doi:10.1016/j.jmva.2021.104737>. It also performs influence diagnostic through global and local influence for four possible perturbation schema. 
-Imports: mvtnorm (>= 1.1-0), sampleSelection (>= 1.2-6), MomTrunc (>= 5.79), PerformanceAnalytics (>= 2.0.4)
+Imports: mvtnorm (>= 1.1-0), sampleSelection (>= 1.2-6), MomTrunc (>= 5.79), PerformanceAnalytics (>= 2.0.4), ggplot2, methods
 License: GPL (>= 2.0)
 Encoding: UTF-8
 LazyData: false
