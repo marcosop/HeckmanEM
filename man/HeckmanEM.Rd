@@ -2,7 +2,7 @@
 % Please edit documentation in R/HeckmanEM.R
 \name{HeckmanEM}
 \alias{HeckmanEM}
-\title{Fit the Normal or Student-t Heckman Selectio model.}
+\title{Fit the Normal or Student-t Heckman Selection model}
 \usage{
 HeckmanEM(
   y,
@@ -25,7 +25,7 @@ HeckmanEM(
 
 \item{w}{A covariate matrix for the missing indicator cc.}
 
-\item{cc}{A missing incidator vector (1=obserced, 0=missing) .}
+\item{cc}{A missing indicator vector (1=observed, 0=missing) .}
 
 \item{nu}{The initial value for the degrees of freedom.}
 
@@ -45,7 +45,7 @@ HeckmanEM(
 An object of the class HeckmanEM with all the outputs provided from the function.
 }
 \description{
-`HeckmanEM()` fit the Heckman selection model.
+`HeckmanEM()` fits the Heckman selection model.
 }
 \examples{
 n <- 100

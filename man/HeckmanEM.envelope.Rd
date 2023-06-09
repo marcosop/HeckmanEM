@@ -2,14 +2,14 @@
 % Please edit documentation in R/envelopes.R
 \name{HeckmanEM.envelope}
 \alias{HeckmanEM.envelope}
-\title{Envelope for the Heckman Selectio model.}
+\title{Envelope for the Heckman Selection model}
 \usage{
 HeckmanEM.envelope(obj, envelope = 0.95, ...)
 }
 \arguments{
 \item{obj}{An object of the class HeckmanEM.}
 
-\item{envelope}{The envelope corverage percertange.}
+\item{envelope}{The envelope coverage percentage.}
 
 \item{...}{Other option for chart.QQPlot from PerformanceAnalytics package.}
 }
@@ -17,7 +17,7 @@ HeckmanEM.envelope(obj, envelope = 0.95, ...)
 A residual plot of the fitted data and its envelope.
 }
 \description{
-`HeckmanEM.envelope()` plot the envelope for the fitted Heckman selection model.
+`HeckmanEM.envelope()` plots the envelope for the fitted Heckman selection model.
 }
 \examples{
 \donttest{

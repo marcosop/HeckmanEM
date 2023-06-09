@@ -2,7 +2,7 @@
 % Please edit documentation in R/criteria.R
 \name{HeckmanEM.criteria}
 \alias{HeckmanEM.criteria}
-\title{Model selection criteria for the Heckman Selectio model}
+\title{Model selection criteria for the Heckman Selection model}
 \usage{
 HeckmanEM.criteria(obj)
 }
@@ -13,7 +13,7 @@ HeckmanEM.criteria(obj)
 The calculated AIC, AICc, and BIC for the parameters of the fitted model.
 }
 \description{
-`HeckmanEM.criteria()` calculate the AIC, AICc, BIC selection criteria for the fitted Heckman selection model.
+`HeckmanEM.criteria()` calculates the AIC, AICc, BIC selection criteria for the fitted Heckman selection model.
 }
 \examples{
 \donttest{

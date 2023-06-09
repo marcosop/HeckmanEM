@@ -2,7 +2,7 @@
 % Please edit documentation in R/MI.R
 \name{HeckmanEM.infomat}
 \alias{HeckmanEM.infomat}
-\title{Standard error estimation for the Heckman Selectio model by the Information Matrix.}
+\title{Standard error estimation for the Heckman Selection model by the Information Matrix}
 \usage{
 HeckmanEM.infomat(obj)
 }
@@ -13,7 +13,7 @@ HeckmanEM.infomat(obj)
 The estimated standard errors for the parameters of the fitted model.
 }
 \description{
-`HeckmanEM.infomat()` estimate the standard errors for the parameters for the fitted Heckman selection model.
+`HeckmanEM.infomat()` estimates the standard errors for the parameters for the fitted Heckman selection model.
 }
 \examples{
 \donttest{

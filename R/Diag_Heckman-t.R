@@ -414,6 +414,33 @@ HessianaQ <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, n
 ### CASE-DELETION - User
 ### -------------------------------
 
+#' Case deletion analysis for Heckman selection model
+#'
+#' This function performs case deletion analysis based on a HeckmanEM object.
+#'
+#' @param object A HeckmanEM object.
+#'
+#' @return A list with a vector GD of dimension \eqn{n} (see details), and a benchmark value.
+#'
+#' @details This function uses the case deletion approach to study
+#' the impact of deleting one or more observations from the dataset
+#' on the parameters estimates, using the ideas of Cook (1977) and Zhu et.al. (2001).
+#' The GD vector contains the generalized Cook distances
+#' \deqn{\textrm{GD}^1_i = \dot{Q}_{[i]}(\widehat{\boldsymbol{\theta}} \mid \widehat{\boldsymbol{\theta}})^{\top} \left\{-\ddot{Q}(\widehat{\boldsymbol{\theta}} \mid \widehat{\boldsymbol{\theta}})\right\}^{-1}\dot{Q}_{[i]}(\widehat{\boldsymbol{\theta}} \mid \widehat{\boldsymbol{\theta}}),}
+#' where \eqn{\dot{Q}_{[i]}(\widehat{\boldsymbol{\theta}}\mid \widehat{\boldsymbol{\theta}})} is the gradient vector after dropping the \eqn{i}th observation, and
+#' \eqn{\ddot{Q}(\widehat{\boldsymbol{\theta}} \mid \widehat{\boldsymbol{\theta}})} is the Hessian matrix. The benchmark was adapted using the suggestion of Barros et al. (2010). We use \eqn{(2 \times \textrm{npar})/n} as the benchmark for the \eqn{\textrm{GD}_i}, with \eqn{\textrm{npar}} representing the number of estimated model parameters.
+#'
+#' @export CaseDeletion
+#'
+#' @examples
+#' data <- ...  # Load HeckmanEM object
+#' CaseDeletion(data)
+#' @references M. Barros, M. Galea, M. González, V. Leiva, Influence diagnostics in the Tobit censored response model, Statistical Methods & Applications 19 (2010) 379–397.
+#'
+#' R. D. Cook, Detection of influential observation in linear regression, Technometrics 19 (1977) 15–18.
+#'
+#' H. Zhu, S. Lee, B. Wei, J. Zhou, Case-deletion measures for models with incomplete data, Biometrika 88 (2001) 727–737.
+#'
 
 CaseDeletion <- function(object){
 
@@ -458,6 +485,9 @@ CaseDele <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu
       #
       # cat("% completed: ", round((i/n)*100,2), "Time: ", round(time.inter,2),"\n")
     }
+
+    ### Benchmark for GD by Massuia et al. (2015)
+    benchmark_GD  <- 2*(p+q+2)/n
   }
 
   if(family=="T"){
@@ -474,10 +504,14 @@ CaseDele <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu
       # time.inter    <- end.time - start.time
 
       #cat("% completed: ", round((i/n)*100,2), "Time: ", round(time.inter,2),"\n")
+
+      ### Benchmark for GD by Massuia et al. (2015)
+      benchmark_GD  <- 2*(p+q+3)/n
     }
   }
 
-  return(GD)
+
+  return(list(GD = GD,benchmark = benchmark_GD))
 }
 
 ### -------------------------------

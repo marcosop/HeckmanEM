@@ -2,6 +2,7 @@
 
 S3method(print,HeckmanEM)
 S3method(summary,HeckmanEM)
+export(CaseDeletion)
 export(HeckmanEM)
 export(HeckmanEM.criteria)
 export(HeckmanEM.envelope)

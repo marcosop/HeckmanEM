@@ -2,7 +2,7 @@
 % Please edit documentation in R/rHeckman.R
 \name{rHeckman}
 \alias{rHeckman}
-\title{Generate data from the Heckman Selectio model (Normal or Student-t).}
+\title{Data generation from the Heckman Selection model (Normal or Student-t)}
 \usage{
 rHeckman(x, w, beta, gamma, sigma2, rho, nu = 4, family = "T")
 }
@@ -17,7 +17,7 @@ rHeckman(x, w, beta, gamma, sigma2, rho, nu = 4, family = "T")
 
 \item{sigma2}{Value for the variance.}
 
-\item{rho}{Value for the dependence between the reponse and missing value.}
+\item{rho}{Value for the dependence between the response and missing value.}
 
 \item{nu}{Value for the degrees of freedom.}
 
@@ -27,7 +27,7 @@ rHeckman(x, w, beta, gamma, sigma2, rho, nu = 4, family = "T")
 Return an object with the response (y) and missing values (cc).
 }
 \description{
-`rHeckman()` generate a ramdom sample from the Heckman selection model (Normal or Student-t).
+`rHeckman()` generates a random sample from the Heckman selection model (Normal or Student-t).
 }
 \examples{
 \donttest{
