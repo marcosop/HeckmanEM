@@ -420,7 +420,7 @@ HessianaQ <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, n
 #'
 #' @param object A HeckmanEM object.
 #'
-#' @return A list with a vector GD of dimension \eqn{n} (see details), and a benchmark value.
+#' @return A list of class \code{HeckmanEM.deletion} with a vector GD of dimension \eqn{n} (see details), and a benchmark value.
 #'
 #' @details This function uses the case deletion approach to study
 #' the impact of deleting one or more observations from the dataset
@@ -432,9 +432,30 @@ HessianaQ <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, n
 #'
 #' @export CaseDeletion
 #'
-#' @examples
-#' data <- ...  # Load HeckmanEM object
-#' CaseDeletion(data)
+#'@examples
+#' n    <- 100
+#' nu   <- 3
+#' cens <- 0.25
+#'
+#' set.seed(13)
+#' w <- cbind(1, runif(n, -1, 1), rnorm(n))
+#' x <- cbind(w[,1:2])
+#' c <- qt(cens, df = nu)
+#'
+#' sigma2   <- 1
+#' beta     <- c(1, 0.5)
+#' gamma    <- c(1, 0.3, -.5)
+#' gamma[1] <- -c * sqrt(sigma2)
+#'
+#' datas <- rHeckman(x, w, beta, gamma, sigma2, rho = 0.6, nu, family = "T")
+#' y     <- datas$y
+#' cc    <- datas$cc
+#'\donttest{
+#' heckmodel <- HeckmanEM(y, x, w, cc, family = "Normal", iter.max = 50)
+#'
+#' global <- CaseDeletion(heckmodel)
+#' plot(global)
+#'}
 #' @references M. Barros, M. Galea, M. González, V. Leiva, Influence diagnostics in the Tobit censored response model, Statistical Methods & Applications 19 (2010) 379–397.
 #'
 #' R. D. Cook, Detection of influential observation in linear regression, Technometrics 19 (1977) 15–18.
@@ -447,9 +468,9 @@ CaseDeletion <- function(object){
   if(is(object,"HeckmanEM")){
 
     CaseDele(y = object$y,x = object$x,w = object$w,cc = object$cc,
-       beta=object$beta, gama=object$gamma,rho=object$rho,
-       sigma=object$sigma,nu = object$nu,
-       family = object$family)
+             beta=object$beta, gama=object$gamma,rho=object$rho,
+             sigma=object$sigma,nu = object$nu,
+             family = object$family)
 
   }else{
     stop("The object must be of the `HeckmanEM` class.")
@@ -510,8 +531,11 @@ CaseDele <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu
     }
   }
 
+  obj.out = list(GD = GD,benchmark = benchmark_GD)
 
-  return(list(GD = GD,benchmark = benchmark_GD))
+  class(obj.out) = "HeckmanEM.deletion"
+
+  return(obj.out)
 }
 
 ### -------------------------------
@@ -532,17 +556,53 @@ CaseDele <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu
 #' "exploratory".
 #' @param k A positive real constant to be used in the benchmark calculation: \eqn{M_0 + k\times \mathrm{sd}(M_0)}. Default is 3.5.
 #'
-#' @return Returns a list with the following elements:
+#' @return Returns a list of class \code{HeckmanEM.influence} with the following elements:
 #' \item{M0}{A vector of length \eqn{n} with the aggregated contribution of all eigenvectors of the matrix associated with the normal curvature.}
 #' \item{benchmark}{\eqn{M_0 + k\times \mathrm{sd}(M_0)}}
 #' \item{influent}{A vector with the influential observations' positions.}
+#' \item{type}{The perturbation type.}
 #'
 #' @examples
-#' \dontrun{
-#' # Assume `heckman_model` is a HeckmanEM object
-#' Influence(heckman_model, type = "case-weight")
-#' }
+#' n    <- 100
+#' nu   <- 3
+#' cens <- 0.25
 #'
+#' set.seed(13)
+#' w <- cbind(1, runif(n, -1, 1), rnorm(n))
+#' x <- cbind(w[,1:2])
+#' c <- qt(cens, df = nu)
+#'
+#' sigma2   <- 1
+#' beta     <- c(1, 0.5)
+#' gamma    <- c(1, 0.3, -.5)
+#' gamma[1] <- -c * sqrt(sigma2)
+#'
+#' datas <- rHeckman(x, w, beta, gamma, sigma2, rho = 0.6, nu, family = "T")
+#' y     <- datas$y
+#' cc    <- datas$cc
+#'\donttest{
+#' heckmodel <- HeckmanEM(y, x, w, cc, family = "Normal", iter.max = 50)
+#'
+#' global <- CaseDeletion(heckmodel)
+#' plot(global)
+#'
+#' local_case <- Influence(heckmodel, type = "case-weight")
+#' local_case$influent # influential values here!
+#' plot(local_case)
+#'
+#' local_scale <- Influence(heckmodel, type = "scale")
+#' local_scale$influent # influential values here!
+#' plot(local_scale)
+#'
+#' local_response <- Influence(heckmodel, type = "response")
+#' local_response$influent # influential values here!
+#' plot(local_response)
+#'
+#' local_explore <- Influence(heckmodel, type = "exploratory", colx = 2)
+#' local_explore$influent # influential values here!
+#' plot(local_explore)
+#'
+#'}
 #' @seealso
 #' \code{\link{HeckmanEM}}
 #'
@@ -554,10 +614,6 @@ CaseDele <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu
 #' @export Influence
 #'
 
-Influence <- function(object, type, colx = NULL, k = 3.5) {
-  # function body
-}
-
 Influence <- function(object,type,colx = NULL,k=3.5){
 
   # types = c("case-weight","scale","response",
@@ -568,32 +624,32 @@ Influence <- function(object,type,colx = NULL,k=3.5){
 
 
 
-    if(is(object,"HeckmanEM")){
+  if(is(object,"HeckmanEM")){
 
-      if(!is.numeric(k) | k <= 0){
-        stop("Constant k must be a positive real number.")
-      }
+    if(!is.numeric(k) | k <= 0){
+      stop("Constant k must be a positive real number.")
+    }
 
-      if(type %in% types){
-        Perturb = which(types == type)
-      }else{
-#stop("Perturbation types may only take values `case-weight`,`scale`,`response`,`exploratory`, `exploratory2`, `exploratory3`.")
-        stop("Perturbation types may only take values `case-weight`,`scale`,`response`, and `exploratory`.")
-      }
+    if(type %in% types){
+      Perturb = which(types == type)
+    }else{
+      #stop("Perturbation types may only take values `case-weight`,`scale`,`response`,`exploratory`, `exploratory2`, `exploratory3`.")
+      stop("Perturbation types may only take values `case-weight`,`scale`,`response`, and `exploratory`.")
+    }
 
-      if(Perturb>=4){
+    if(Perturb>=4){
 
-        if(is.null(colx)){
-          stop("The parameter colx should be an integer that represents the position
+      if(is.null(colx)){
+        stop("The parameter colx should be an integer that represents the position
          of the column in matrix x that will undergo perturbation.")
-        }
-
-        if(!is.numeric(colx) | colx %% 1 != 0 | colx <= 0 | colx > ncol(object$x)){
-          stop("The parameter colx should be an integer that represents the position
-         of the column in matrix x that will undergo perturbation.")
-        }
-
       }
+
+      if(!is.numeric(colx) | colx %% 1 != 0 | colx <= 0 | colx > ncol(object$x)){
+        stop("The parameter colx should be an integer that represents the position
+         of the column in matrix x that will undergo perturbation.")
+      }
+
+    }
 
     If(y = object$y,x = object$x,w = object$w,cc = object$cc,
        beta=object$beta, gama=object$gamma,rho=object$rho,
@@ -1446,7 +1502,42 @@ If <- function(y, x, w, cc, beta=beta, gama=gama,rho=rho,
 
   if(length(influent) == 0){influent <- NULL}
 
-  obj.out <- list(M0 = medida, benchmark = benchmark, influent = influent)
+  obj.out <- list(M0 = medida, benchmark = benchmark,
+                  influent = influent, type = c("case-weight","scale","response","exploratory")[Perturb])
+
+  class(obj.out) = "HeckmanEM.influence"
 
   return(obj.out)
+
+
+}
+
+
+# -------------------------------------------------------------------------
+
+#' @importFrom ggplot2 ggplot geom_segment theme_bw geom_hline aes labs
+#' @export
+plot.HeckmanEM.deletion = function(x, ...) {
+  GDplot = data.frame(x=seq(1, length(c(x$GD))), GD=x$GD)
+  m = nrow(GDplot)
+  bench = x$benchmark
+
+  ggplot(GDplot) + geom_segment(aes(x=x, xend=x, y=0, yend=GD)) + theme_bw() +
+    labs(x="Index", y="GD") + geom_hline(yintercept=bench, color="red", linetype="dotted")
+}
+
+
+# -------------------------------------------------------------------------
+
+#' @export
+plot.HeckmanEM.influence = function(x, ...) {
+  M0plot = data.frame(x=seq(1, length(c(x$M0))), M0=x$M0)
+  m = nrow(M0plot)
+  bench = x$benchmark
+  type = x$type
+
+  ggplot(M0plot, aes(x=x, y=M0)) + geom_segment(aes(x=x, xend=x, y=0, yend=M0)) +
+    geom_hline(yintercept=x$benchmark, color="red", linetype="dotted") +
+    labs(x="Index", y=bquote(M[0]),
+         subtitle=paste("Perturbation type:",type)) + theme_bw()
 }

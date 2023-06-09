@@ -10,7 +10,7 @@ CaseDeletion(object)
 \item{object}{A HeckmanEM object.}
 }
 \value{
-A list with a vector GD of dimension \eqn{n} (see details), and a benchmark value.
+A list of class \code{HeckmanEM.deletion} with a vector GD of dimension \eqn{n} (see details), and a benchmark value.
 }
 \description{
 This function performs case deletion analysis based on a HeckmanEM object.
@@ -25,8 +25,29 @@ where \eqn{\dot{Q}_{[i]}(\widehat{\boldsymbol{\theta}}\mid \widehat{\boldsymbol{
 \eqn{\ddot{Q}(\widehat{\boldsymbol{\theta}} \mid \widehat{\boldsymbol{\theta}})} is the Hessian matrix. The benchmark was adapted using the suggestion of Barros et al. (2010). We use \eqn{(2 \times \textrm{npar})/n} as the benchmark for the \eqn{\textrm{GD}_i}, with \eqn{\textrm{npar}} representing the number of estimated model parameters.
 }
 \examples{
-data <- ...  # Load HeckmanEM object
-CaseDeletion(data)
+n    <- 100
+nu   <- 3
+cens <- 0.25
+
+set.seed(13)
+w <- cbind(1, runif(n, -1, 1), rnorm(n))
+x <- cbind(w[,1:2])
+c <- qt(cens, df = nu)
+
+sigma2   <- 1
+beta     <- c(1, 0.5)
+gamma    <- c(1, 0.3, -.5)
+gamma[1] <- -c * sqrt(sigma2)
+
+datas <- rHeckman(x, w, beta, gamma, sigma2, rho = 0.6, nu, family = "T")
+y     <- datas$y
+cc    <- datas$cc
+\donttest{
+heckmodel <- HeckmanEM(y, x, w, cc, family = "Normal", iter.max = 50)
+
+global <- CaseDeletion(heckmodel)
+plot(global)
+}
 }
 \references{
 M. Barros, M. Galea, M. González, V. Leiva, Influence diagnostics in the Tobit censored response model, Statistical Methods & Applications 19 (2010) 379–397.

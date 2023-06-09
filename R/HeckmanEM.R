@@ -16,34 +16,29 @@
 #' @return An object of the class HeckmanEM with all the outputs provided from the function.
 #'
 #' @examples
-#' n <- 100
-#' family <- "T"
-#' nu <- 4
-#' rho <- .6
-#' cens <- .25
+#' n    <- 100
+#' nu   <- 3
+#' cens <- 0.25
 #'
-#' set.seed(20200527)
+#' set.seed(13)
 #' w <- cbind(1,runif(n,-1,1),rnorm(n))
 #' x <- cbind(w[,1:2])
 #' c <- qt(cens, df=nu)
 #'
-#' sigma2 <- 1
-#'
-#' beta <- c(1,0.5)
-#' gamma <- c(1,0.3,-.5)
+#' sigma2   <- 1
+#' beta     <- c(1,0.5)
+#' gamma    <- c(1,0.3,-.5)
 #' gamma[1] <- -c*sqrt(sigma2)
 #'
 #' set.seed(1)
-#' datas <- rHeckman(x,w,beta,gamma,sigma2,rho,nu,family=family)
+#' datas <- rHeckman(x,w,beta,gamma,sigma2,rho = 0.6,nu,family="T")
 #' y <- datas$y
 #' cc <- datas$cc
 #' \donttest{
 #' # Normal EM
-#' res.N <- HeckmanEM(y, x, w, cc, nu = 4, family="Normal", error = 1e-05, iter.max = 50,
-#'                    im=TRUE, criteria = TRUE)
-#' # Student-t: EM
-#' res.T <- HeckmanEM(y, x, w, cc, nu = 4, family="T", error = 1e-05, iter.max = 50,
-#'                    im=TRUE, criteria = TRUE)
+#' res.N <- HeckmanEM(y, x, w, cc, family="Normal",iter.max = 50)
+#' # Student-t EM
+#' res.T <- HeckmanEM(y, x, w, cc, nu = 4, family="T", iter.max = 50)
 #' }
 #' @export
 HeckmanEM <- function(y, x, w, cc, nu = 4, family="T", error = 1e-05,iter.max = 500, im=TRUE, criteria = TRUE, verbose = TRUE){

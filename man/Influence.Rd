@@ -19,21 +19,57 @@ object's matrix \code{x} that will undergo perturbation. Only required when type
 \item{k}{A positive real constant to be used in the benchmark calculation: \eqn{M_0 + k\times \mathrm{sd}(M_0)}. Default is 3.5.}
 }
 \value{
-Returns a list with the following elements:
+Returns a list of class \code{HeckmanEM.influence} with the following elements:
 \item{M0}{A vector of length \eqn{n} with the aggregated contribution of all eigenvectors of the matrix associated with the normal curvature.}
 \item{benchmark}{\eqn{M_0 + k\times \mathrm{sd}(M_0)}}
 \item{influent}{A vector with the influential observations' positions.}
+\item{type}{The perturbation type.}
 }
 \description{
 This function conducts influence analysis for a given `HeckmanEM` object.
 The influence analysis can be conducted using several types of perturbations.
 }
 \examples{
-\dontrun{
-# Assume `heckman_model` is a HeckmanEM object
-Influence(heckman_model, type = "case-weight")
-}
+n    <- 100
+nu   <- 3
+cens <- 0.25
 
+set.seed(13)
+w <- cbind(1, runif(n, -1, 1), rnorm(n))
+x <- cbind(w[,1:2])
+c <- qt(cens, df = nu)
+
+sigma2   <- 1
+beta     <- c(1, 0.5)
+gamma    <- c(1, 0.3, -.5)
+gamma[1] <- -c * sqrt(sigma2)
+
+datas <- rHeckman(x, w, beta, gamma, sigma2, rho = 0.6, nu, family = "T")
+y     <- datas$y
+cc    <- datas$cc
+\donttest{
+heckmodel <- HeckmanEM(y, x, w, cc, family = "Normal", iter.max = 50)
+
+global <- CaseDeletion(heckmodel)
+plot(global)
+
+local_case <- Influence(heckmodel, type = "case-weight")
+local_case$influent # influential values here!
+plot(local_case)
+
+local_scale <- Influence(heckmodel, type = "scale")
+local_scale$influent # influential values here!
+plot(local_scale)
+
+local_response <- Influence(heckmodel, type = "response")
+local_response$influent # influential values here!
+plot(local_response)
+
+local_explore <- Influence(heckmodel, type = "exploratory", colx = 2)
+local_explore$influent # influential values here!
+plot(local_explore)
+
+}
 }
 \references{
 Insert any relevant references here.
