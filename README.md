@@ -4,10 +4,10 @@
 ## Overview
 
 It performs maximum likelihood estimation for the Heckman selection
-model (Normal or Student-t) using an EM-algorithm \[[Lachos et
-al. (2021)](https://doi.org/10.1016/j.jmva.2021.104737)\]. It also
-performs influence diagnostic through global and local influence for
-four possible perturbation schema.
+model (Normal or Student-t) using an EM-algorithm [(Lachos et al.,
+2021)](https://doi.org/10.1016/j.jmva.2021.104737). It also performs
+influence diagnostic through global and local influence for four
+possible perturbation schema.
 
 ## Installation
 
