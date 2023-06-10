@@ -1514,7 +1514,7 @@ If <- function(y, x, w, cc, beta=beta, gama=gama,rho=rho,
 
 
 # -------------------------------------------------------------------------
-
+globalVariables(c("GD","M0"))
 #' @importFrom methods is
 #' @importFrom stats sd
 #' @importFrom ggplot2 ggplot geom_segment theme_bw geom_hline aes labs
