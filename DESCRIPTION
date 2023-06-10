@@ -1,7 +1,7 @@
 Package: HeckmanEM
 Type: Package
 Title: Fit Normal or Student-t Heckman Selection Models
-Version: 0.2.0
+Version: 0.2-0
 Authors@R: c(person(given = "Marcos",family = "Prates", role=c("aut","cre","trl"),
        	            email="marcosop@est.ufmg.br"),
              person(given = "Victor",family="Lachos", role="aut"),
