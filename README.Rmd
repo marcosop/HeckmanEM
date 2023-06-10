@@ -118,6 +118,13 @@ local_response <- Influence(heckmodel, type = "response")
 local_response$influent
 # Visualization
 plot(local_response)
+
+# Exploratory case in which a covariate is altered (column 2 in this case)
+local_explore <- Influence(heckmodel, type = "exploratory", colx = 2)
+# Influential observations
+local_explore$influent
+# Visualization
+plot(local_explore)
 ```
 
 ## Authors
