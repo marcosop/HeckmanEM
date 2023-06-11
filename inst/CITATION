@@ -1,6 +1,6 @@
 citHeader("To cite HeckmanEM in publications use:")
 
-bibEntry(
+bibentry(
   bibtype = "Article",
   title        = "Heckman selection-t model: Parameter estimation via the EM-algorithm",
   author       = c(person("V{\'i}ctor Hugo Lachos"),
