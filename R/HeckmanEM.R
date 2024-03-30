@@ -1,4 +1,4 @@
-#' Fit the Normal or Student-t Heckman Selection model
+#' Fit the Normal, Student-t or Contaminated normal Heckman Selection model
 #'
 #' `HeckmanEM()` fits the Heckman selection model.
 #'
@@ -6,8 +6,9 @@
 #' @param x A covariate matrix for the response y.
 #' @param w A covariate matrix for the missing indicator cc.
 #' @param cc A missing indicator vector (1=observed, 0=missing) .
-#' @param nu The initial value for the degrees of freedom.
-#' @param family The family to be used (Normal or T).
+#' @param nu When using the t- distribution, the initial value for the degrees of freedom.
+#' When using the CN distribution, the initial values for the proportion of bad observations and the degree of contamination.
+#' @param family The family to be used (Normal, T or CN).
 #' @param error The absolute convergence error for the EM stopping rule.
 #' @param iter.max The maximum number of iterations for the EM algorithm.
 #' @param im TRUE/FALSE, boolean to decide if the standard errors of the parameters should be computed.
@@ -43,7 +44,7 @@
 #' @export
 HeckmanEM <- function(y, x, w, cc, nu = 4, family="T", error = 1e-05,iter.max = 500, im=TRUE, criteria = TRUE, verbose = TRUE){
 
- if (family != "Normal" && family !="normal" && family !="T" && family !="t" ) stop("Family not recognized! Obly families allowed are: \"Normal\" and \"T\".")
+ if (family != "Normal" && family !="normal" && family !="T" && family !="t" && family !="CN" && family !="cn" ) stop("Family not recognized! Obly families allowed are: \"Normal\", \"T\" and \"CN\".")
  if(!is.vector(y)) stop("y must be a vector!")
  if(!is.vector(cc)) stop("y must be a vector!")
 
@@ -52,12 +53,31 @@ HeckmanEM <- function(y, x, w, cc, nu = 4, family="T", error = 1e-05,iter.max = 
  if(!is.matrix(x)) stop("y must be a matrix!")
  if(!is.matrix(w)) stop("y must be a matrix!")
 
- if((family == "T" || family == "t") && length(nu) == 0) stop("initial for nu must be provided!")
-
  if(family == "Normal" || family == "normal"){
    out <- EMn.alg(y=y, x=x, w=w, cc=cc, error = error, iter.max = iter.max, im=im, criteria = criteria, verbose=verbose)
  }
- else out <- EMt.alg(y=y, x=x, w=w, cc=cc, nu=nu, error = error, iter.max = iter.max, im=im, criteria = criteria, verbose=verbose)
+
+ if((family == "T" || family == "t")){
+   if (length(nu) == 0) {
+     stop("initial for nu must be provided!")
+   } else{
+     out <- EMt.alg(y=y, x=x, w=w, cc=cc, nu=nu, error = error, iter.max = iter.max, im=im, criteria = criteria, verbose=verbose)
+     }
+ }
+
+
+ if((family == "CN" || family == "cn")){
+   cond1 = nu[1]<0 || nu[1]>1
+   cond2 = nu[2]<0 || nu[2]>1
+   if (length(nu) != 2) {
+     stop("initial vector of length 2 must be provided for nu when using the CN distribution!")
+   }else if (cond1 || cond2){
+     stop("both components of the vector nu must be between 0 and 1 when using the CN distribution!")
+   }
+   else{
+     out <- EMcn.alg(y=y, x=x, w=w, cc=cc, nu=nu, error = error, iter.max = iter.max, im=im, criteria = criteria, verbose=verbose)
+   }
+ }
 
  return(out)
 }

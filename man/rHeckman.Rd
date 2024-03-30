@@ -2,7 +2,7 @@
 % Please edit documentation in R/rHeckman.R
 \name{rHeckman}
 \alias{rHeckman}
-\title{Data generation from the Heckman Selection model (Normal or Student-t)}
+\title{Data generation from the Heckman Selection model (Normal, Student-t or CN)}
 \usage{
 rHeckman(x, w, beta, gamma, sigma2, rho, nu = 4, family = "T")
 }
@@ -19,15 +19,16 @@ rHeckman(x, w, beta, gamma, sigma2, rho, nu = 4, family = "T")
 
 \item{rho}{Value for the dependence between the response and missing value.}
 
-\item{nu}{Value for the degrees of freedom.}
+\item{nu}{When using the t- distribution, the initial value for the degrees of freedom.
+When using the CN distribution, the initial values for the proportion of bad observations and the degree of contamination.}
 
-\item{family}{The family to be used (Normal or T).}
+\item{family}{The family to be used (Normal, T, or CN).}
 }
 \value{
 Return an object with the response (y) and missing values (cc).
 }
 \description{
-`rHeckman()` generates a random sample from the Heckman selection model (Normal or Student-t).
+`rHeckman()` generates a random sample from the Heckman selection model (Normal, Student-t or CN).
 }
 \examples{
 \donttest{

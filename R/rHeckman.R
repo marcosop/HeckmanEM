@@ -1,6 +1,6 @@
-#' Data generation from the Heckman Selection model (Normal or Student-t)
+#' Data generation from the Heckman Selection model (Normal, Student-t or CN)
 #'
-#' `rHeckman()` generates a random sample from the Heckman selection model (Normal or Student-t).
+#' `rHeckman()` generates a random sample from the Heckman selection model (Normal, Student-t or CN).
 #'
 #' @param x A covariate matrix for the response y.
 #' @param w A covariate matrix for the missing indicator cc.
@@ -8,8 +8,9 @@
 #' @param gamma Values for the gamma vector.
 #' @param sigma2 Value for the variance.
 #' @param rho Value for the dependence between the response and missing value.
-#' @param nu Value for the degrees of freedom.
-#' @param family The family to be used (Normal or T).
+#' @param nu When using the t- distribution, the initial value for the degrees of freedom.
+#' When using the CN distribution, the initial values for the proportion of bad observations and the degree of contamination.
+#' @param family The family to be used (Normal, T, or CN).
 #' @return Return an object with the response (y) and missing values (cc).
 #'
 #' @examples
@@ -50,6 +51,25 @@ Sigma<- matrix(c(sigma2, rhoa, rhoa, 1 ), ncol = 2)
 errorTerms<- mvtnorm::rmvt(n, Sigma,df=nu)
 resp<- cbind(x%*%beta,w%*%gamma)+ errorTerms
 }
+
+if(family=="CN" || family=="cn"){# Contaminated Normal
+  cond1 = nu[1]<0 || nu[1]>1
+  cond2 = nu[2]<0 || nu[2]>1
+  if (length(nu) != 2) {
+    stop("initial vector of length 2 must be provided for nu when using the CN distribution!")
+  }else if (cond1 || cond2){
+    stop("both components of the vector nu must be between 0 and 1 when using the CN distribution!")
+  }
+  #' @importFrom stats runif
+  p <- runif(n)
+  u <- rep(1,n)
+  u[p<nu[1]] <- nu[2]
+  Sigma<- matrix(c(sigma2, rhoa, rhoa, 1 ), ncol = 2)
+  errorTerms<- rmvnorm(n, c( 0, 0 ), Sigma)/sqrt(u)
+  resp<- cbind(x%*%beta,w%*%gamma)+ errorTerms
+}
+
+
 
 cc<-(resp[,2]> 0)+0
 resp[cc==0,1]<-0

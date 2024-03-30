@@ -37,14 +37,16 @@
 HeckmanEM.criteria <- function(obj){
 
   if(!inherits(obj,"HeckmanEM")) stop("Only \"HeckmanEM\" objects accepted!")
-  if (obj$family != "Normal" && obj$family !="normal" && obj$family !="T" && obj$family !="t" ) stop("Family not recognized")
+  if (obj$family != "Normal" && obj$family !="normal" && obj$family !="T" && obj$family !="t" &&
+      obj$family != "CN" && obj$family !="cn" ) stop("Family not recognized")
 
   n <- length(obj$y)
   p <- length(obj$beta)
   q <- length(obj$gamma)
 
   if(obj$family == "Normal" || obj$family == "normal") npar<-length(p+q+2)
-  else npar<-length(p+q+3)
+  else if (obj$family == "T" || obj$family == "t") npar<-length(p+q+3)
+  else npar<-length(p+q+4)
 
   lkante <- obj$logL
   ##Model comparison criteria
@@ -54,3 +56,4 @@ HeckmanEM.criteria <- function(obj){
 
   return(list(AIC=AICc, AICc = AICcorr, BIC = BICc))
 }
+
