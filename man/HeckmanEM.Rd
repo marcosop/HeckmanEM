@@ -2,7 +2,7 @@
 % Please edit documentation in R/HeckmanEM.R
 \name{HeckmanEM}
 \alias{HeckmanEM}
-\title{Fit the Normal or Student-t Heckman Selection model}
+\title{Fit the Normal, Student-t or Contaminated normal Heckman Selection model}
 \usage{
 HeckmanEM(
   y,
@@ -27,9 +27,10 @@ HeckmanEM(
 
 \item{cc}{A missing indicator vector (1=observed, 0=missing) .}
 
-\item{nu}{The initial value for the degrees of freedom.}
+\item{nu}{When using the t- distribution, the initial value for the degrees of freedom.
+When using the CN distribution, the initial values for the proportion of bad observations and the degree of contamination.}
 
-\item{family}{The family to be used (Normal or T).}
+\item{family}{The family to be used (Normal, T or CN).}
 
 \item{error}{The absolute convergence error for the EM stopping rule.}
 
