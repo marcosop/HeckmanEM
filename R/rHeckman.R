@@ -56,7 +56,7 @@ if(family=="CN" || family=="cn"){# Contaminated Normal
   cond1 = nu[1]<0 || nu[1]>1
   cond2 = nu[2]<0 || nu[2]>1
   if (length(nu) != 2) {
-    stop("initial vector ofs length 2 must be provided for nu when using the CN distribution!")
+    stop("initial vector of length 2 must be provided for nu when using the CN distribution!")
   }else if (cond1 || cond2){
     stop("both components of the vector nu must be between 0 and 1 when using the CN distribution!")
   }
