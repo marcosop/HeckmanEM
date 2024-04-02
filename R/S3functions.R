@@ -6,8 +6,8 @@ print.HeckmanEM <- function(x, ...){
   cat("*gamma:", x$gamma,"\n")
   cat("*sigma:", x$sigma,"\n")
   cat("*rho:", x$rho,"\n")
-  if(x$family == "T" || x$family == "t" || x$family == "CN" || x$family == "cn"){cat("*nu:",x$nu,"\n")}
-  print(x)
+  if(x$family == "T" || x$family == "t" || x$family == "CN" || x$family == "cn") cat("*nu:",x$nu,"\n")
+  #print(x)
 }
 
 
