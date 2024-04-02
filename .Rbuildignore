@@ -1,2 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^HeckmanEM\.Rcheck$
+^HeckmanEM.*\.tar\.gz$
+^HeckmanEM.*\.tgz$

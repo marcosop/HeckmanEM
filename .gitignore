@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
+HeckmanEM.Rcheck/
+HeckmanEM*.tar.gz
+HeckmanEM*.tgz
