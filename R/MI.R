@@ -76,7 +76,7 @@ HeckmanEM.infomat <- function(obj){
       if(cc[i]==1){
         mu12.1<- mu2[i]+rho/sigma*(y[i]-mu1[i])
         sigma12.1<- 1-rho^2
-        MomNT<- MomTrunc::meanvarTMD(0,Inf, mu12.1, sigma12.1, dist="normal")
+        MomNT<- MomTrunc::meanvarTMD(lower = 0,upper = Inf, mu = mu12.1, Sigma = sigma12.1, dist="normal")
 
         uy[2]<-MomNT$mean
         uyy[2,2]<-MomNT$varcov
@@ -85,7 +85,7 @@ HeckmanEM.infomat <- function(obj){
       }
       else{
 
-        MomNT1<- MomTrunc::meanvarTMD(c(-Inf,-Inf),c(Inf,0),c(mu1[i],mu2[i]),Sigma,dist="normal")
+        MomNT1<- MomTrunc::meanvarTMD(lower = c(-Inf,-Inf),upper = c(Inf,0),mu = c(mu1[i],mu2[i]),Sigma = Sigma,dist="normal")
         uy <- MomNT1$mean
         uyy <- MomNT1$EYY
 
@@ -151,11 +151,11 @@ HeckmanEM.infomat <- function(obj){
 
         auxU2<- 1-stats::pt(auxupper/sqrt(SigmaUi),nu1)
 
-        MoMT<- MomTrunc::meanvarTMD(0,Inf,muUi, SigmaUiA, dist="t",nu=nu1+2)
+        MoMT<- MomTrunc::meanvarTMD(lower = 0,upper = Inf,mu = muUi, Sigma = SigmaUiA, dist="t",nu=nu1+2)
 
 
         vary <- matrix(0,2,2)
-        vary[2,2]<-MomTrunc::meanvarTMD(0,Inf, muUi, SigmaUi, dist="t",nu=nu)$varcov
+        vary[2,2]<-MomTrunc::meanvarTMD(lower = 0,upper = Inf, mu = muUi, Sigma = SigmaUi, dist="t",nu=nu)$varcov
 
 
         U0<-as.numeric(auxU1/auxU2)/auxcte
@@ -187,8 +187,8 @@ HeckmanEM.infomat <- function(obj){
 
         auxU2 <- stats::pt(auxupper/sqrt(SigmaUi[2,2]),nu)
 
-        MomNT1<- MomTrunc::meanvarTMD(c(-Inf,-Inf),c(Inf,0),c(mu1[i],mu2[i]),SigmaUiA,dist="t",nu=nu+2)
-        vary = MomTrunc::meanvarTMD(c(-Inf,-Inf),c(Inf,0),c(mu1[i],mu2[i]), Sigma,dist="t",nu=nu)$varcov
+        MomNT1<- MomTrunc::meanvarTMD(lower = c(-Inf,-Inf),upper = c(Inf,0),mu = c(mu1[i],mu2[i]),Sigma = SigmaUiA,dist="t",nu=nu+2)
+        vary = MomTrunc::meanvarTMD(lower = c(-Inf,-Inf),upper = c(Inf,0),mu = c(mu1[i],mu2[i]), Sigma = Sigma,dist="t",nu=nu)$varcov
 
         U0<-as.numeric(auxU1/auxU2)
         U1<-auxU1/auxU2*MomNT1$mean
@@ -237,8 +237,8 @@ HeckmanEM.infomat <- function(obj){
 
         if(sigma12.1 == 0) sigma12.1 <- 0.0001
 
-        MomNT     <- meanvarTMD(0, Inf, mu12.1, sigma12.1, dist = "normal",n = 10^5)
-        MomNT1    <- meanvarTMD(0, Inf, mu12.1, sigma12.1/nu2, dist = "normal",n = 10^5) ###
+        MomNT     <- MomTrunc::meanvarTMD(lower = 0, upper = Inf, mu = mu12.1, Sigma = sigma12.1, dist = "normal",n = 10^5)
+        MomNT1    <- MomTrunc::meanvarTMD(lower = 0, upper = Inf, mu = mu12.1, Sigma = sigma12.1/nu2, dist = "normal",n = 10^5) ###
 
         ep0       <- pnorm(0, mu12.1, sqrt(sigma12.1/nu2),lower.tail = FALSE)
         ep1       <- pnorm(0, mu12.1, sqrt(sigma12.1),lower.tail = FALSE)
@@ -264,8 +264,8 @@ HeckmanEM.infomat <- function(obj){
       }
 
       else{
-        MomNT2    <- meanvarTMD(c(-Inf, -Inf), c(Inf, 0), c(mu1[i], mu2[i]), Sigma, dist = "normal",n = 10^5)
-        MomNT3    <- meanvarTMD(c(-Inf, -Inf), c(Inf, 0), c(mu1[i], mu2[i]), Sigma/nu2, dist = "normal",n = 10^5)
+        MomNT2    <- MomTrunc::meanvarTMD(lower = c(-Inf, -Inf), upper = c(Inf, 0), mu = c(mu1[i], mu2[i]), Sigma = Sigma, dist = "normal",n = 10^5)
+        MomNT3    <- MomTrunc::meanvarTMD(lower = c(-Inf, -Inf), upper = c(Inf, 0), mu = c(mu1[i], mu2[i]), Sigma = Sigma/nu2, dist = "normal",n = 10^5)
 
         auxp1      <- pmvnorm(lower=-Inf,upper=c(Inf,0), mean=c(mu1[i], mu2[i]), sigma =Sigma/nu2)[1]
         auxp2      <- pmvnorm(lower=-Inf,upper=c(Inf,0), mean=c(mu1[i], mu2[i]), sigma =Sigma)[1]

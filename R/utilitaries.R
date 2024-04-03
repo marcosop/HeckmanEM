@@ -106,7 +106,7 @@ while((criterio > error) && (count <= iter.max)){
 
          if(sigma12.1 == 0) sigma12.1 <- 0.0001
         #' @importFrom MomTrunc meanvarTMD
-        MomNT<- MomTrunc::meanvarTMD(0,Inf, mu12.1, sigma12.1, dist="normal")
+        MomNT<- MomTrunc::meanvarTMD(lower = 0,upper = Inf, mu = mu12.1, Sigma = sigma12.1, dist="normal")
 
         uy[2]<-MomNT$mean
         uyy[2,2]<-MomNT$varcov
@@ -115,7 +115,7 @@ while((criterio > error) && (count <= iter.max)){
    		}
       else{
 
-        MomNT1<- MomTrunc::meanvarTMD(c(-Inf,-Inf),c(Inf,0),c(mu1[i],mu2[i]),Sigma,dist="normal")
+        MomNT1<- MomTrunc::meanvarTMD(lower = c(-Inf,-Inf),upper = c(Inf,0),mu = c(mu1[i],mu2[i]),Sigma = Sigma,dist="normal")
         uy <-MomNT1$mean
         uyy<-MomNT1$EYY
 
@@ -252,11 +252,11 @@ while((criterio > error) && (count <= iter.max)){
 
 
 
-          MoMT<- MomTrunc::meanvarTMD(0,Inf,muUi, SigmaUiA, dist="t",nu=nu1+2)
+          MoMT<- MomTrunc::meanvarTMD(lower = 0,upper = Inf,mu = muUi, Sigma = SigmaUiA, dist="t",nu=nu1+2)
 
 
          vary <- matrix(0,2,2)
-         vary[2,2]<- MomTrunc::meanvarTMD(0,Inf, muUi, SigmaUi, dist="t",nu=nu)$varcov
+         vary[2,2]<- MomTrunc::meanvarTMD(lower = 0,upper = Inf, mu = muUi, Sigma = SigmaUi, dist="t",nu=nu)$varcov
 
 
           U0<-as.numeric(auxU1/auxU2)/auxcte
@@ -290,8 +290,8 @@ while((criterio > error) && (count <= iter.max)){
 
          if(auxU2 == 0) auxU2<- .Machine$double.xmin
 
-        MomNT1<- MomTrunc::meanvarTMD(c(-Inf,-Inf),c(Inf,0),c(mu1[i],mu2[i]),SigmaUiA,dist="t",nu=nu+2)
-        vary = MomTrunc::meanvarTMD(c(-Inf,-Inf),c(Inf,0),c(mu1[i],mu2[i]), Sigma,dist="t",nu=nu)$varcov
+        MomNT1<- MomTrunc::meanvarTMD(lower = c(-Inf,-Inf),upper = c(Inf,0),mu = c(mu1[i],mu2[i]),Sigma = SigmaUiA,dist="t",nu=nu+2)
+        vary = MomTrunc::meanvarTMD(lower = c(-Inf,-Inf),upper = c(Inf,0),mu = c(mu1[i],mu2[i]), Sigma = Sigma,dist="t",nu=nu)$varcov
 
          U0<-as.numeric(auxU1/auxU2)
          U1<-auxU1/auxU2*MomNT1$mean
@@ -380,8 +380,8 @@ likeLcn <- function(y, x, w, cc, beta, gama, Sigma, nu1=0.1, nu2=0.1){
   aux01<- dnorm(med, log = T)- log(sigma)
   aux02<- nu1*exp(aux0)+(1-nu1)*exp(aux01)
   wp<- nu1*exp(aux0)/aux02
-  aux1<- log(aux02) + log(wp*exp(pnorm(mu.c*sqrt(nu2)/sigma.c, log = T))+(1-wp)*exp(pnorm(mu.c/sigma.c, log = T)))
-  aux2<- log(nu1*exp(pnorm(-w%*%gama*sqrt(nu2), log = T))+(1-nu1)*exp(pnorm(-w%*%gama, log = T)))
+  aux1<- log(aux02) + log(wp*exp(pnorm(q = mu.c*sqrt(nu2)/sigma.c, log.p = FALSE))+(1-wp)*exp(pnorm(q = mu.c/sigma.c, log.p = FALSE)))
+  aux2<- log(nu1*exp(pnorm(q = -w%*%gama*sqrt(nu2), log.p = FALSE))+(1-nu1)*exp(pnorm(q = -w%*%gama, log.p = FALSE)))
   fd      <- ifelse(cc==1,aux1 , aux2)
   return(sum(fd))
 }
@@ -457,8 +457,8 @@ EMcn.alg <- function(y, x, w, cc, error = 1e-6,nu,iter.max = 5000,criteria,im,ve
 
         if(sigma12.1 == 0) sigma12.1 <- 0.0001
         #' @importFrom MomTrunc meanvarTMD
-        MomNT     <- meanvarTMD(0, Inf, mu12.1, sigma12.1, dist = "normal",n = 10^5)
-        MomNT1    <- meanvarTMD(0, Inf, mu12.1, sigma12.1/nu2, dist = "normal",n = 10^5) ###
+        MomNT     <- MomTrunc::meanvarTMD(lower = 0, upper = Inf, mu = mu12.1, Sigma = sigma12.1, dist = "normal",n = 10^5)
+        MomNT1    <- MomTrunc::meanvarTMD(lower = 0, upper = Inf, mu = mu12.1, Sigma = sigma12.1/nu2, dist = "normal",n = 10^5) ###
 
         ep0       <- pnorm(0, mu12.1, sqrt(sigma12.1/nu2),lower.tail = FALSE)
         ep1       <- pnorm(0, mu12.1, sqrt(sigma12.1),lower.tail = FALSE)
@@ -484,8 +484,8 @@ EMcn.alg <- function(y, x, w, cc, error = 1e-6,nu,iter.max = 5000,criteria,im,ve
       }
 
       else{
-        MomNT2    <- meanvarTMD(c(-Inf, -Inf), c(Inf, 0), c(mu1[i], mu2[i]), Sigma, dist = "normal",n = 10^5)
-        MomNT3    <- meanvarTMD(c(-Inf, -Inf), c(Inf, 0), c(mu1[i], mu2[i]), Sigma/nu2, dist = "normal",n = 10^5)
+        MomNT2    <- MomTrunc::meanvarTMD(lower = c(-Inf, -Inf), upper = c(Inf, 0), mu = c(mu1[i], mu2[i]), Sigma = Sigma, dist = "normal",n = 10^5)
+        MomNT3    <- MomTrunc::meanvarTMD(lower = c(-Inf, -Inf), upper = c(Inf, 0), mu = c(mu1[i], mu2[i]), Sigma = Sigma/nu2, dist = "normal",n = 10^5)
         #' @importFrom mvtnorm pmvnorm
         auxp1      <- pmvnorm(lower=-Inf,upper=c(Inf,0), mean=c(mu1[i], mu2[i]), sigma =Sigma/nu2)[1]
         auxp2      <- pmvnorm(lower=-Inf,upper=c(Inf,0), mean=c(mu1[i], mu2[i]), sigma =Sigma)[1]
