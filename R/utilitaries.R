@@ -418,7 +418,7 @@ EMcn.alg <- function(y, x, w, cc, error = 1e-6,nu,iter.max = 5000,criteria,im,ve
   sigma <-  ifelse(ini$sigma <= 0, 1, ini$sigma)
   nu1    <- nu[1] ##
   nu2    <- nu[2] ##
-  sigma2 <- sigma2^2
+  sigma2 <- sigma^2
   rhoa   <- sigma*rho
   Sigma  <- matrix(c(sigma2, rhoa, rhoa, 1), ncol = 2)
 
