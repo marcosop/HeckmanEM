@@ -136,6 +136,7 @@ This package has been developed by:
 - Marcos Oliveira (Author, Contributor)
 - Christian Galarza (Contributor)
 - Katherine Loor (Contributor)
+- Alejandro Ordoñez (Contributor)
 
 ## Contributions
 
