@@ -416,7 +416,8 @@ HessianaQ <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, n
 
 #' Case deletion analysis for Heckman selection model
 #'
-#' This function performs case deletion analysis based on a HeckmanEM object.
+#' This function performs case deletion analysis based on a HeckmanEM object (not available for the
+#' contaminated normal model).
 #'
 #' @param object A HeckmanEM object.
 #'
@@ -466,7 +467,9 @@ HessianaQ <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, n
 CaseDeletion <- function(object){
 
   if(is(object,"HeckmanEM")){
-
+    if(object$family == "CN" || object$family == "cn"){
+      stop("case deletion analysis is not available for the contaminated normal model")
+    }
     CaseDele(y = object$y,x = object$x,w = object$w,cc = object$cc,
              beta=object$beta, gama=object$gamma,rho=object$rho,
              sigma=object$sigma,nu = object$nu,
@@ -546,7 +549,8 @@ CaseDele <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu
 #'
 #' @description
 #' This function conducts influence analysis for a given `HeckmanEM` object.
-#' The influence analysis can be conducted using several types of perturbations.
+#' The influence analysis can be conducted using several types of perturbations (not available for the
+#' contaminated Normal model).
 #'
 #' @param object A `HeckmanEM` object to perform the analysis on.
 #' @param type A character string indicating the type of perturbation to perform.
@@ -625,6 +629,9 @@ Influence <- function(object,type,colx = NULL,k=3.5){
 
 
   if(is(object,"HeckmanEM")){
+    if(object$family == "CN" || object$family == "cn"){
+      stop("influence analysis is not available for the contaminated normal model")
+    }
 
     if(!is.numeric(k) | k <= 0){
       stop("Constant k must be a positive real number.")

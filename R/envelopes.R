@@ -184,7 +184,7 @@ resGCS <- function(y, x, w, cc, beta=beta, gama=gama, rho=rho, sigma=sigma, nu, 
       #' @importFrom MomTrunc pmvEST
       aux.1<- MomTrunc::pmvESN(c(-Inf, 0), c(y[i], Inf), c(mu1[i], mu2[i]), Sigma/nu2, c(0, 0), 0)
       aux.2<- MomTrunc::pmvESN(c(-Inf, 0), c(y[i], Inf), c(mu1[i], mu2[i]), Sigma, c(0, 0), 0)
-      aux  <- (nu1*aux.1+(1-nu1)*aux.2)*cc[i] + (nu1* pnorm(y[i], mu2[i],sqrt(nu2))+(1-nu1)* pnorm(y[i] - mu2[i]))*(1 - cc[i])
+      aux  <- (nu1*aux.1+(1-nu1)*aux.2)*cc[i] + (nu1* pnorm(y[i], mu2[i],sqrt(1/nu2))+(1-nu1)* pnorm(y[i] - mu2[i]))*(1 - cc[i])
       S[i] <- stats::qnorm(aux)
       E[i] <- -log(1 - aux)
     }
