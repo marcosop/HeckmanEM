@@ -13,7 +13,8 @@ CaseDeletion(object)
 A list of class \code{HeckmanEM.deletion} with a vector GD of dimension \eqn{n} (see details), and a benchmark value.
 }
 \description{
-This function performs case deletion analysis based on a HeckmanEM object.
+This function performs case deletion analysis based on a HeckmanEM object (not available for the
+contaminated normal model).
 }
 \details{
 This function uses the case deletion approach to study

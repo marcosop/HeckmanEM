@@ -27,7 +27,8 @@ Returns a list of class \code{HeckmanEM.influence} with the following elements:
 }
 \description{
 This function conducts influence analysis for a given `HeckmanEM` object.
-The influence analysis can be conducted using several types of perturbations.
+The influence analysis can be conducted using several types of perturbations (not available for the
+contaminated Normal model).
 }
 \examples{
 n    <- 100

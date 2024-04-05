@@ -1,5 +1,5 @@
 
-# HeckmanEM: Fit Normal or Student-t Heckman Selection Models
+# HeckmanEM: Fit Normal, Student-t or Contaminated normal Heckman Selection Models
 
 ## Overview
 
