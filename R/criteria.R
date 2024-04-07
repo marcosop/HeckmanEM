@@ -44,9 +44,9 @@ HeckmanEM.criteria <- function(obj){
   p <- length(obj$beta)
   q <- length(obj$gamma)
 
-  if(obj$family == "Normal" || obj$family == "normal") npar<-length(p+q+2)
-  else if (obj$family == "T" || obj$family == "t") npar<-length(p+q+3)
-  else npar<-length(p+q+4)
+  if(obj$family == "Normal" || obj$family == "normal") npar <- p+q+2
+  else if (obj$family == "T" || obj$family == "t") npar <- p+q+3
+  else npar <- p+q+4
 
   lkante <- obj$logL
   ##Model comparison criteria

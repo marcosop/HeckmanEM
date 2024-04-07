@@ -1,3 +1,7 @@
+2024-03-29 (0.2-2) Marcos Prates <marcosop@est.ufmg.br>, Victor Lachos, Dipak Dey, Marcos Olivera, Chrisitan Galarza, Katherine Loor and Alejandro Ordonez.
+
+  * fix criteria calculation
+
 2024-03-29 (0.2-1) Marcos Prates <marcosop@est.ufmg.br>, Victor Lachos, Dipak Dey, Marcos Olivera, Chrisitan Galarza, Katherine Loor and Alejandro Ordonez.
 
   * included the Heckman CN model
