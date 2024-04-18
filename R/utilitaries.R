@@ -380,8 +380,8 @@ likeLcn <- function(y, x, w, cc, beta, gama, Sigma, nu1=0.1, nu2=0.1){
   aux01<- dnorm(med, log = T)- log(sigma)
   aux02<- nu1*exp(aux0)+(1-nu1)*exp(aux01)
   wp<- nu1*exp(aux0)/aux02
-  aux1<- log(aux02) + log(wp*exp(pnorm(q = mu.c*sqrt(nu2)/sigma.c, log.p = FALSE))+(1-wp)*exp(pnorm(q = mu.c/sigma.c, log.p = FALSE)))
-  aux2<- log(nu1*exp(pnorm(q = -w%*%gama*sqrt(nu2), log.p = FALSE))+(1-nu1)*exp(pnorm(q = -w%*%gama, log.p = FALSE)))
+  aux1<- log(aux02) + log(wp*exp(pnorm(q = mu.c*sqrt(nu2)/sigma.c, log.p = TRUE))+(1-wp)*exp(pnorm(q = mu.c/sigma.c, log.p = TRUE)))
+  aux2<- log(nu1*exp(pnorm(q = -w%*%gama*sqrt(nu2), log.p = TRUE))+(1-nu1)*exp(pnorm(q = -w%*%gama, log.p = TRUE)))
   fd      <- ifelse(cc==1,aux1 , aux2)
   return(sum(fd))
 }
