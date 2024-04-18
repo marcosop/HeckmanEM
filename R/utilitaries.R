@@ -95,6 +95,7 @@ while((criterio > error) && (count <= iter.max)){
    suma1<- suma11<-suma12<-0 #matrix(0,2,2)
    suma2<- soma4<-matrix(0,p+q,p+q)
    suma3<- matrix(0,p+q,1)
+   #
  	for (i in 1:n){
 
        uy <-matrix(y[i],2,1)
