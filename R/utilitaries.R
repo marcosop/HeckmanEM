@@ -445,11 +445,12 @@ EMcn.alg <- function(y, x, w, cc, error = 1e-6,nu,iter.max = 5000,criteria,im,ve
     suma3  <- matrix(0, p+q, 1)
     sumaep <- 0
     sumaE1 <-matrix(0, 2, 2)
+    uyvec = 0
+    epvec = 0
     for (i in 1:n){
       #print(i)
       uy   <- epy<-  matrix(y[i], 2, 1)
       uyy  <- epyy<- matrix(0   , 2, 2)
-
       if(cc[i]==1){
         mu12.1    <- mu2[i] + rho/sigma*(y[i] - mu1[i])
         sigma12.1 <- 1 - rho^2
@@ -518,6 +519,8 @@ EMcn.alg <- function(y, x, w, cc, error = 1e-6,nu,iter.max = 5000,criteria,im,ve
       suma2       <- suma2  + (1+(nu2-1)*ep)*t(aux41)%*%SigI%*%(aux41)                    # Cálculo do betaC (first sum)
       suma3       <- suma3  + t(aux41)%*%SigI%*%(uy+(nu2-1)*epy)                          # Cálculo do betaC (second sum)
       sumaep      <- sumaep + ep
+      uyvec[i] = uy[1]
+      epvec[i] = ep
       lista[[i]]        <- list(uy, uyy)
       names(lista[[i]]) <- c("E11", "E12")
     }
@@ -570,7 +573,8 @@ EMcn.alg <- function(y, x, w, cc, error = 1e-6,nu,iter.max = 5000,criteria,im,ve
 
   #desvios <- matrizMI(y, x, w, cc, beta, gama, rho, sigma, nu = c(nu1,nu2), type = "CN")
 
-  out <- list(y=y, x=x, w=w, cc=cc, beta=beta, gamma=gama, rho=rho, sigma=sigma, nu=c(nu1,nu2), sd=desvios, logL=lkante,AIC=AICc, AICc=AICcorr, BIC=BICc, family="CN")
+  out <- list(y=y, x=x, w=w, cc=cc, beta=beta, gamma=gama, rho=rho, sigma=sigma, nu=c(nu1,nu2), sd=desvios, logL=lkante,AIC=AICc, AICc=AICcorr, BIC=BICc, family="CN",
+              residuals = epvec, fitted.values = uyvec)
   class(out) <- "HeckmanEM"
 
   if(criteria){
