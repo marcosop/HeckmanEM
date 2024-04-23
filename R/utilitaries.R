@@ -574,7 +574,7 @@ EMcn.alg <- function(y, x, w, cc, error = 1e-6,nu,iter.max = 5000,criteria,im,ve
   #desvios <- matrizMI(y, x, w, cc, beta, gama, rho, sigma, nu = c(nu1,nu2), type = "CN")
 
   out <- list(y=y, x=x, w=w, cc=cc, beta=beta, gamma=gama, rho=rho, sigma=sigma, nu=c(nu1,nu2), sd=desvios, logL=lkante,AIC=AICc, AICc=AICcorr, BIC=BICc, family="CN",
-              residuals = epvec, fitted.values = uyvec)
+              residuals = epvec, uyvec = uyvec,fitted.values = x%*%beta)
   class(out) <- "HeckmanEM"
 
   if(criteria){
