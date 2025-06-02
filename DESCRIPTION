@@ -1,7 +1,7 @@
 Package: HeckmanEM
 Type: Package
 Title: Fit Normal, Student-t or Contaminated Normal Heckman Selection Models
-Version: 0.2-1
+Version: 0.2-2
 Authors@R: c(person(given = "Marcos",family = "Prates", role=c("aut","cre","trl"),
        	            email="marcosop@est.ufmg.br", comment = c(ORCID = "0000-0001-8077-4898")),
              person(given = "Victor",family="Lachos", role="aut", comment = c(ORCID = "0000-0002-7239-2459")),
